@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Three Concepts</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,600;0,800;1,800;1,900&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;600;800&display=swap">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9e6df; font: 16px/1.5 Inter, system-ui, sans-serif; color: #111; }
+  .intro { padding: 28px 4vw 0; }
+  .intro h1 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
+  .intro p { margin: 4px 0 0; color: #555; }
+  .opt { margin: 22px 4vw 46px; }
+  .tag { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; margin-bottom: 10px; font: 500 12px 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .tag b { font: 800 22px Inter; letter-spacing: -.03em; text-transform: none; }
+  .tag button { margin-left: auto; padding: 8px 14px; border: 2px solid #111; border-radius: 999px; background: #fff; font: 700 12px Inter; cursor: pointer; }
+  .frame { position: relative; overflow: hidden; height: 640px; border-radius: 16px; box-shadow: 0 24px 60px rgba(0,0,0,.18); }
+
+  /* ================= 1 · THE BOARD ================= */
+  .board-c { background: #f2eee6; padding: 26px; display: grid; grid-template-rows: auto 1fr auto; gap: 18px; }
+  .bnav { display: flex; justify-content: space-between; align-items: center; font: 700 12px 'JetBrains Mono', monospace; letter-spacing: .14em; }
+  .bnav span:last-child { padding: 6px 12px; background: #111; color: #ffc400; }
+  .solari { background: #111; border-radius: 10px; padding: 22px; box-shadow: inset 0 0 0 4px #000, 0 18px 0 -6px #000; }
+  .srow { display: flex; gap: 4px; flex-wrap: wrap; }
+  .srow + .srow { margin-top: 6px; }
+  .ch { position: relative; width: var(--w, 1ch); height: 1.18em; font: 800 var(--fs, 78px)/1.18 'Barlow Condensed', sans-serif; color: #f4f1ea; background: #1d1d1d; border-radius: 4px; text-align: center; overflow: hidden; perspective: 300px; }
+  .ch::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #000; }
+  .ch.y { color: #ffc400; }
+  .ch.flick { animation: flick .07s steps(1) infinite; }
+  @keyframes flick { 50% { transform: scaleY(.92); filter: brightness(.7); } }
+  .big .ch { --fs: clamp(48px, 8.6vw, 118px); --w: .68em; }
+  .mid .ch { --fs: clamp(18px, 2vw, 26px); --w: .72em; }
+  .dep { margin-top: 18px; display: grid; gap: 6px; }
+  .dep .head { display: grid; grid-template-columns: 4.2em 1fr 4.2em 8.4em; font-size: 10px; gap: 10px; font: 700 10px 'JetBrains Mono', monospace; letter-spacing: .2em; color: #ffc400; padding: 0 2px; }
+  .dep .r { display: grid; grid-template-columns: auto 1fr auto auto; gap: 14px; }
+  .dep .r .srow { flex-wrap: nowrap; }
+  .dep .r .srow { gap: 2px; }
+  .dep .r .ch { --fs: clamp(13px, 1.5vw, 20px); --w: .8em; }
+  .bfoot { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
+  .bfoot p { margin: 0; max-width: 520px; font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+  .bfoot .cta { padding: 16px 24px; background: #ffc400; border: 3px solid #111; box-shadow: 6px 6px 0 #111; font: 800 15px Inter; }
+
+  /* ================= 2 · MATCHDAY PROGRAMME ================= */
+  .prog { background: #f4efe4; background-image: radial-gradient(rgba(0,0,0,.06) 1px, transparent 1.2px); background-size: 6px 6px; }
+  .prog .masthead { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; padding: 12px 26px; border-bottom: 4px double #111; font: 700 12px 'JetBrains Mono', monospace; letter-spacing: .12em; }
+  .prog .h { position: absolute; left: 24px; top: 58px; margin: 0; font: 400 clamp(72px, 10.5vw, 170px)/.84 Anton, sans-serif; text-transform: uppercase; letter-spacing: -.01em; }
+  .prog .h span { display: block; }
+  .prog .h .red { color: #e63312; }
+  .photo { position: absolute; right: 7%; top: 64px; width: 300px; height: 380px; transform: rotate(3deg); border: 8px solid #fff; box-shadow: 0 16px 30px rgba(0,0,0,.25); background: #ddd; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; filter: grayscale(1) contrast(1.4); mix-blend-mode: multiply; }
+  .photo::after { content: ""; position: absolute; inset: 0; background: radial-gradient(#000 .9px, transparent 1.4px) 0 0 / 5px 5px; mix-blend-mode: screen; opacity: .5; }
+  .tape { position: absolute; width: 120px; height: 30px; background: rgba(255, 214, 102, .8); }
+  .ticket { position: absolute; left: 30px; bottom: 20px; z-index: 2; display: flex; transform: rotate(-4deg); filter: drop-shadow(0 10px 14px rgba(0,0,0,.25)); }
+  .ticket .main { padding: 14px 22px; background: #1f3bb3; color: #fff; border-radius: 10px 0 0 10px; }
+  .ticket .main b { display: block; font: 400 34px/1 Anton; letter-spacing: .02em; }
+  .ticket .main small { font: 700 10px 'JetBrains Mono'; letter-spacing: .14em; }
+  .ticket .stub { padding: 14px 16px; background: #1f3bb3; color: #ffd666; border-left: 3px dashed #f4efe4; border-radius: 0 10px 10px 0; font: 400 26px/1 Anton; display: grid; place-items: center; }
+  .stamp2 { position: absolute; right: 26%; bottom: 60px; padding: 10px 18px; border: 5px solid #e63312; color: #e63312; font: 400 40px/1 Anton; letter-spacing: .06em; transform: rotate(-12deg) scale(3); opacity: 0; border-radius: 8px; }
+  .prog.play .stamp2 { animation: slam .5s cubic-bezier(.3,1.6,.5,1) 1.3s forwards; }
+  @keyframes slam { to { transform: rotate(-12deg) scale(1); opacity: .9; } }
+  .prog .h span { transform: translateY(110%); }
+  .prog .h { overflow: hidden; }
+  .prog.play .h span { animation: rise .7s cubic-bezier(.16,1,.3,1) forwards; }
+  .prog.play .h span:nth-child(2) { animation-delay: .12s; }
+  .prog.play .h span:nth-child(3) { animation-delay: .24s; }
+  @keyframes rise { to { transform: none; } }
+  .prog .photo { transform: rotate(3deg) translateY(-140%); }
+  .prog.play .photo { animation: drop .9s cubic-bezier(.3,1.4,.5,1) .4s forwards; }
+  @keyframes drop { to { transform: rotate(3deg); } }
+  .prog .ticket { transform: rotate(-4deg) translateX(-130%); }
+  .prog.play .ticket { animation: slide .8s cubic-bezier(.16,1,.3,1) .8s forwards; }
+  @keyframes slide { to { transform: rotate(-4deg); } }
+  .cols { position: absolute; right: 26px; bottom: 26px; width: 260px; columns: 2; column-gap: 14px; font-size: 11px; line-height: 1.4; text-align: justify; border-top: 3px solid #111; padding-top: 8px; }
+
+  /* ================= 3 · LIVE BROADCAST ================= */
+  .bc { background: #fbfbfd; }
+  .bc .grid { position: absolute; inset: 0; background: linear-gradient(#e9ecf3 1px, transparent 1px) 0 0 / 40px 40px, linear-gradient(90deg, #e9ecf3 1px, transparent 1px) 0 0 / 40px 40px; }
+  .bug { position: absolute; z-index: 4; left: 22px; top: 20px; display: flex; font: 900 italic 18px 'Barlow Condensed'; letter-spacing: .02em; box-shadow: 0 6px 20px rgba(10,31,68,.2); transform: translateX(-140%); }
+  .bug span { padding: 8px 12px; background: #0a1f44; color: #fff; }
+  .bug span.r { background: #e10600; }
+  .bug span.w { background: #fff; color: #0a1f44; font-family: 'JetBrains Mono'; font-style: normal; font-size: 14px; font-weight: 700; display: grid; place-items: center; }
+  .livedot { position: absolute; right: 24px; top: 24px; display: flex; gap: 8px; align-items: center; padding: 6px 12px; background: #e10600; color: #fff; font: 800 12px 'JetBrains Mono'; letter-spacing: .12em; transform: skewX(-12deg); }
+  .livedot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: .2; } }
+  .bars { position: absolute; left: 0; top: 150px; right: 0; }
+  .bar { position: relative; display: inline-block; margin-left: -20px; padding: 6px 40px 6px 46px; transform: skewX(-14deg) translateX(-110%); }
+  .bar > * { display: block; transform: skewX(14deg); }
+  .bar.navy { background: #0a1f44; color: #fff; font: 900 italic clamp(64px, 10vw, 140px)/.92 'Barlow Condensed'; letter-spacing: -.01em; }
+  .bar.red { margin-top: 8px; background: #e10600; color: #fff; font: 900 italic clamp(64px, 10vw, 140px)/.92 'Barlow Condensed'; }
+  .bar.white { margin-top: 10px; background: #fff; color: #0a1f44; font: 800 italic 22px 'Barlow Condensed'; letter-spacing: .06em; box-shadow: 0 8px 20px rgba(10,31,68,.15); }
+  .bc.play .bug { animation: in .6s cubic-bezier(.16,1,.3,1) .1s forwards; }
+  .bc.play .bar { animation: in .7s cubic-bezier(.16,1,.3,1) forwards; }
+  .bc.play .bar.navy { animation-delay: .3s; }
+  .bc.play .bar.red { animation-delay: .45s; }
+  .bc.play .bar.white { animation-delay: .65s; }
+  @keyframes in { to { transform: skewX(-14deg) translateX(0); } }
+  .bc.play .bug { animation-name: inbug; }
+  @keyframes inbug { to { transform: none; } }
+  .wipe { position: absolute; inset: 0; background: linear-gradient(100deg, #e10600 0 30%, #0a1f44 30% 70%, #fff 70%); transform: translateX(-100%) skewX(-14deg); z-index: 3; }
+  .bc.play .wipe { animation: wipe .9s cubic-bezier(.7,0,.2,1); }
+  @keyframes wipe { 0% { transform: translateX(-110%) skewX(-14deg); } 50% { transform: translateX(0) skewX(-14deg); } 100% { transform: translateX(110%) skewX(-14deg); } }
+  .stat { position: absolute; right: 40px; top: 170px; width: 280px; background: #fff; box-shadow: 0 18px 40px rgba(10,31,68,.18); transform: translateX(140%); }
+  .bc.play .stat { animation: inbug .7s cubic-bezier(.16,1,.3,1) .9s forwards; }
+  .stat h4 { margin: 0; padding: 8px 14px; background: #0a1f44; color: #fff; font: 900 italic 20px 'Barlow Condensed'; letter-spacing: .04em; }
+  .stat div { display: flex; justify-content: space-between; padding: 9px 14px; border-bottom: 1px solid #e9ecf3; font: 700 14px 'JetBrains Mono'; }
+  .stat div b.up { color: #0a8a3a; }
+  .ticker { position: absolute; left: 0; right: 0; bottom: 0; display: flex; height: 46px; background: #0a1f44; color: #fff; font: 800 italic 18px 'Barlow Condensed'; letter-spacing: .04em; overflow: hidden; }
+  .ticker .lab { flex: none; display: grid; place-items: center; padding: 0 18px; background: #e10600; transform: skewX(-14deg); margin-left: -8px; }
+  .ticker .lab span { transform: skewX(14deg); }
+  .ticker .run { display: flex; align-items: center; white-space: nowrap; animation: run 22s linear infinite; padding-left: 20px; }
+  .ticker .run i { font-style: normal; color: #ffc400; margin: 0 14px; }
+  @keyframes run { to { transform: translateX(-50%); } }
+  .lower { position: absolute; left: 40px; bottom: 76px; display: flex; gap: 0; transform: translateY(160%); }
+  .bc.play .lower { animation: inbug .6s cubic-bezier(.16,1,.3,1) 1.2s forwards; }
+  .lower span { padding: 10px 16px; font: 800 italic 18px 'Barlow Condensed'; letter-spacing: .04em; }
+  .lower .a { background: #e10600; color: #fff; } .lower .b { background: #fff; color: #0a1f44; box-shadow: 0 8px 20px rgba(10,31,68,.15); }
+  @media (max-width: 900px) { .stat, .cols, .photo { display: none; } }
+</style>
+</head>
+<body>
+<div class="intro"><h1>Three new directions for the whole site</h1><p>Each one is animated — hit “Replay” to watch it again. Every feature (stock of the day, live F1 + cricket boards, poker, movie night, chat, contact form) carries over into whichever you pick.</p></div>
+
+<section class="opt">
+<div class="tag"><b>1 · THE BOARD</b><span>split-flap departures board · ivory, black, signal yellow</span><button type="button" data-replay="board">Replay</button></div>
+<div class="frame board-c" id="board">
+<div class="bnav"><span>MEET.BHOJANI / TERMINAL 27</span><span>RESUME ↓</span></div>
+<div class="solari">
+<div class="srow big" data-text="MEET BHOJANI"></div>
+<div class="srow mid" style="margin-top:12px" data-text="FINANCE × SYSTEMS · PENN STATE SMEAL ’27" data-yellow="FINANCE × SYSTEMS"></div>
+<div class="dep">
+<div class="head"><span>YEAR</span><span>DESTINATION</span><span>GATE</span><span>STATUS</span></div>
+<div class="r"><div class="srow" data-text="2026"></div><div class="srow" data-text="AMAZON DCF"></div><div class="srow" data-text="P-01"></div><div class="srow" data-text="LANDED" data-yellow="LANDED"></div></div>
+<div class="r"><div class="srow" data-text="2026"></div><div class="srow" data-text="STOCK OF THE DAY"></div><div class="srow" data-text="P-02"></div><div class="srow" data-text="LIVE" data-yellow="LIVE"></div></div>
+<div class="r"><div class="srow" data-text="NOW"></div><div class="srow" data-text="AMBER AI"></div><div class="srow" data-text="P-03"></div><div class="srow" data-text="BOARDING" data-yellow="BOARDING"></div></div>
+</div>
+</div>
+<div class="bfoot"><p>A finance student who builds valuation models, analytics tools and local-first software.</p><span class="cta">CHECK IN →</span></div>
+</div>
+</section>
+
+<section class="opt">
+<div class="tag"><b>2 · MATCHDAY PROGRAMME</b><span>brutalist sports almanac · newsprint, red, royal blue</span><button type="button" data-replay="prog">Replay</button></div>
+<div class="frame prog" id="prog">
+<div class="masthead"><span>THE MEET BHOJANI ALMANAC</span><span>VOL. 27 · EST. 2005</span><span>PRICE: ONE INTERVIEW</span></div>
+<h2 class="h"><span>Meet</span><span class="red">Bhojani</span><span>Builds.</span></h2>
+<div class="photo"><img src="../meet-bhojani-portrait.jpg" alt=""><i class="tape" style="left:-30px;top:10px;transform:rotate(-30deg)"></i><i class="tape" style="right:-30px;bottom:14px;transform:rotate(-30deg)"></i></div>
+<div class="ticket"><div class="main"><small>ADMIT ONE · FINANCE × SYSTEMS</small><b>PENN STATE SMEAL</b><small>CLASS OF 2027 · SEAT P-01</small></div><div class="stub">’27</div></div>
+<div class="stamp2">VERIFIED</div>
+<div class="cols">A finance student who builds — valuation models, analytics tools and local-first software. Inside this issue: an Amazon DCF, a live stock-screening model, Amber the offline assistant, two summers in Gujarat, and a match-centre for cricket and F1.</div>
+</div>
+</section>
+
+<section class="opt">
+<div class="tag"><b>3 · LIVE BROADCAST</b><span>sports TV graphics package · white studio, navy, broadcast red</span><button type="button" data-replay="bc">Replay</button></div>
+<div class="frame bc" id="bc">
+<div class="grid"></div>
+<div class="bug"><span>MB</span><span class="r">FIN</span><span class="w" data-clock>00:00:00</span></div>
+<div class="livedot">ON AIR</div>
+<div class="bars"><div class="bar navy"><span>MEET</span></div><br><div class="bar red"><span>BHOJANI</span></div><br><div class="bar white"><span>FINANCE · SYSTEMS · PENN STATE SMEAL ’27</span></div></div>
+<div class="stat"><h4>TALE OF THE TAPE</h4><div><span>PROJECTS</span><b>3</b></div><div><span>INTERNSHIPS</span><b>2</b></div><div><span>STOCK OF DAY</span><b class="up">JNJ ▲</b></div><div><span>CLASS OF</span><b>2027</b></div></div>
+<div class="lower"><span class="a">NOW SHOWING</span><span class="b">A finance student who builds models, tools and software</span></div>
+<div class="ticker"><div class="lab"><span>MARKETS</span></div><div class="run"><span>STOCK OF THE DAY JNJ <i>▲ 4.87</i> AMAZON DCF $158.20/SH <i>●</i> IND 249/5 v WI <i>●</i> NEXT: SINGAPORE GP <i>●</i> AMBER: BUILDING <i>●</i> STOCK OF THE DAY JNJ <i>▲ 4.87</i> AMAZON DCF $158.20/SH <i>●</i> IND 249/5 v WI <i>●</i> NEXT: SINGAPORE GP <i>●</i> AMBER: BUILDING <i>●</i> </span></div></div>
+<div class="wipe"></div>
+</div>
+</section>
+
+<script>
+  // split-flap: each character cycles through random glyphs before settling, left to right
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  function solari() {
+    document.querySelectorAll('#board .srow').forEach((row, r) => {
+      const text = row.dataset.text, yellow = row.dataset.yellow || '';
+      row.innerHTML = '';
+      [...text].forEach((ch, i) => {
+        const c = document.createElement('span');
+        c.className = 'ch' + (yellow && text.indexOf(yellow) <= i && i < text.indexOf(yellow) + yellow.length ? ' y' : '');
+        c.textContent = ' ';
+        row.appendChild(c);
+        if (ch === ' ') { c.style.background = 'transparent'; return; }
+        c.classList.add('flick');
+        const stop = 500 + r * 160 + i * 55 + Math.random() * 300;
+        const iv = setInterval(() => { c.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0]; }, 55);
+        setTimeout(() => { clearInterval(iv); c.textContent = ch; c.classList.remove('flick'); }, stop);
+      });
+    });
+  }
+  const replay = { board: solari, prog: () => { const p = document.getElementById('prog'); p.classList.remove('play'); void p.offsetWidth; p.classList.add('play'); }, bc: () => { const b = document.getElementById('bc'); b.classList.remove('play'); void b.offsetWidth; b.classList.add('play'); } };
+  document.querySelectorAll('[data-replay]').forEach((b) => b.addEventListener('click', () => replay[b.dataset.replay]()));
+  Object.values(replay).forEach((f) => f());
+  setInterval(() => { const d = new Date(); document.querySelector('[data-clock]').textContent = d.toTimeString().slice(0, 8); }, 1000);
+</script>
+</body>
+</html>

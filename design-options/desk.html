@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meet's Desk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,600&display=swap">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  body { font: 16px/1.4 Inter, system-ui, sans-serif; color: #1b1612; background: #c99b67; }
+
+  /* ---------- the desk: light oak, lit from a window at the top-left ---------- */
+  .desk {
+    position: fixed; inset: 0;
+    background:
+      repeating-linear-gradient(92deg, rgba(120, 72, 30, .07) 0 2px, transparent 2px 9px),
+      repeating-linear-gradient(88deg, rgba(255, 240, 210, .08) 0 1px, transparent 1px 23px),
+      repeating-linear-gradient(90deg, rgba(110, 66, 28, .05) 0 40px, rgba(255, 230, 190, .04) 40px 120px),
+      linear-gradient(180deg, #e2b886, #d3a571 55%, #c49261);
+  }
+  .desk::before { /* plank seams */
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(180deg, transparent 0 calc(25% - 2px), rgba(80, 45, 18, .35) calc(25% - 2px) 25%);
+    opacity: .6;
+  }
+  .light { /* window light falling across the desk, with mullion shadows */
+    position: fixed; inset: 0; pointer-events: none; z-index: 50; mix-blend-mode: soft-light;
+    background:
+      linear-gradient(120deg, rgba(255, 252, 235, .85) 0 18%, transparent 18% 20%, rgba(255, 252, 235, .75) 20% 38%, transparent 38% 40%, rgba(255, 252, 235, .6) 40% 56%, transparent 70%),
+      radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 240, .5), transparent 60%);
+  }
+  .vignette { position: fixed; inset: 0; pointer-events: none; z-index: 51; background: radial-gradient(130% 100% at 40% 35%, transparent 55%, rgba(60, 30, 10, .35)); }
+
+  /* ---------- stage: a 1600×1000 world scaled to the window ---------- */
+  .stage { position: fixed; left: 50%; top: 50%; width: 1600px; height: 1000px; transform-origin: 50% 50%; }
+  .obj { position: absolute; cursor: grab; touch-action: none; user-select: none; transform: rotate(var(--r, 0deg)); transition: filter .25s ease; will-change: transform; }
+  .obj.dragging { cursor: grabbing; z-index: 40; }
+  .obj .shadowed { transition: transform .3s cubic-bezier(.2,.9,.3,1.2), filter .3s ease; filter: drop-shadow(10px 14px 10px rgba(60, 30, 8, .35)) drop-shadow(2px 3px 2px rgba(60, 30, 8, .3)); }
+  .obj:hover .shadowed, .obj.dragging .shadowed { transform: translate(-4px, -8px) scale(1.035); filter: drop-shadow(22px 30px 22px rgba(60, 30, 8, .3)) drop-shadow(4px 6px 4px rgba(60, 30, 8, .25)); }
+  .obj:focus-visible { outline: none; }
+  .obj:focus-visible .shadowed { outline: 3px dashed #1b1612; outline-offset: 8px; }
+  .label {
+    position: absolute; left: 50%; top: -18px; z-index: 5; translate: -50% -100%; rotate: calc(var(--r, 0deg) * -1);
+    padding: 7px 12px 7px 22px; background: #fffaf0; border-radius: 3px; white-space: nowrap;
+    font: 700 13px Inter; color: #1b1612; box-shadow: 0 6px 14px rgba(60, 30, 8, .25);
+    opacity: 0; transform: translateY(8px) rotate(-3deg); transition: opacity .2s ease, transform .3s cubic-bezier(.2,.9,.3,1.3); pointer-events: none;
+  }
+  .label::before { content: ""; position: absolute; left: 8px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: #c9a97a; box-shadow: inset 0 0 0 2px #8a6a40; }
+  .label b { color: #b3261e; }
+  .obj:hover .label, .obj:focus-visible .label { opacity: 1; transform: translateY(0) rotate(-3deg); }
+
+  /* nameplate */
+  .plate { width: 560px; padding: 22px 30px 20px; border-radius: 10px; text-align: center;
+    background: linear-gradient(160deg, #3a2414, #24150b); box-shadow: inset 0 2px 0 rgba(255, 220, 160, .15), inset 0 -3px 0 rgba(0, 0, 0, .4); }
+  .plate .brass { padding: 16px 20px 14px; border-radius: 4px; background: linear-gradient(170deg, #f6dd9b, #c99a3c 45%, #f3d58c 60%, #a87a28); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), inset 0 -2px 0 rgba(90, 60, 10, .5); }
+  .plate h1 { margin: 0; font: 700 50px/1 'Playfair Display', serif; letter-spacing: .04em; color: #3b2608; text-shadow: 0 1px 0 rgba(255, 245, 210, .7), 0 -1px 0 rgba(90, 60, 10, .4); }
+  .plate p { margin: 8px 0 0; font: 700 12px 'JetBrains Mono'; letter-spacing: .22em; text-transform: uppercase; color: #5a3d10; }
+
+  /* laptop */
+  .laptop { width: 620px; }
+  .lid { height: 340px; padding: 16px; border-radius: 18px 18px 6px 6px; background: linear-gradient(180deg, #2a2d33, #16181c); box-shadow: inset 0 0 0 2px #3b3f46; }
+  .screen { height: 100%; border-radius: 6px; overflow: hidden; background: #fff; display: grid; grid-template-rows: 28px 26px 1fr 26px; font: 500 12px 'JetBrains Mono'; }
+  .xl-bar { display: flex; align-items: center; gap: 10px; padding: 0 10px; background: #1f7244; color: #fff; font: 700 12px Inter; }
+  .xl-bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.5); }
+  .xl-fx { display: flex; align-items: center; gap: 8px; padding: 0 8px; border-bottom: 1px solid #d9dde3; color: #1b1612; }
+  .xl-fx b { padding: 2px 6px; background: #eef1f4; border-radius: 3px; font-size: 11px; }
+  .xl-fx span::after { content: "▌"; animation: caret 1s steps(2) infinite; }
+  @keyframes caret { 50% { opacity: 0; } }
+  .cells { display: grid; grid-template-columns: 34px repeat(4, 1fr); grid-auto-rows: 1fr; background: #d9dde3; gap: 1px; }
+  .cells > * { background: #fff; padding: 3px 6px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; }
+  .cells .hd { background: #f3f5f7; color: #6b7280; justify-content: center; font-size: 10px; }
+  .cells .sel { box-shadow: inset 0 0 0 2px #1f7244; }
+  .cells .up { color: #127a3a; font-weight: 700; }
+  .cells .big { font-weight: 700; color: #1f7244; }
+  .xl-tabs { display: flex; gap: 2px; align-items: end; padding: 0 8px; background: #f3f5f7; border-top: 1px solid #d9dde3; font: 600 11px Inter; }
+  .xl-tabs span { padding: 4px 10px; color: #4b5563; }
+  .xl-tabs span.on { background: #fff; color: #1f7244; box-shadow: inset 0 -2px 0 #1f7244; }
+  .deck { height: 240px; margin: 0 -14px; padding: 16px 40px 14px; border-radius: 6px 6px 22px 22px; background: linear-gradient(180deg, #d9dce1, #bfc3c9); box-shadow: inset 0 2px 0 #eef0f3, inset 0 -3px 0 #9ca1a8; }
+  .keys { display: grid; grid-template-columns: repeat(14, 1fr); gap: 5px; }
+  .keys i { height: 22px; border-radius: 4px; background: #2b2e33; box-shadow: inset 0 -2px 0 #111; }
+  .keys i.w2 { grid-column: span 2; } .keys i.sp { grid-column: 4 / span 7; }
+  .pad { width: 220px; height: 92px; margin: 12px auto 0; border-radius: 10px; background: #c8ccd2; box-shadow: inset 0 1px 3px rgba(0,0,0,.18); }
+
+  /* F1 model car (top-down) */
+  .car { width: 140px; }
+  /* cricket ball */
+  .ball { width: 92px; height: 92px; }
+  .ball svg { width: 100%; height: 100%; display: block; }
+  /* poker */
+  .poker { width: 230px; height: 190px; }
+  .card { position: absolute; width: 96px; height: 134px; border-radius: 9px; background: #fffdf8; box-shadow: inset 0 0 0 1px #d9d2c4; display: grid; place-items: center; font: 800 46px Inter; }
+  .card small { position: absolute; left: 8px; top: 6px; font: 800 16px/1 Inter; }
+  .card.red { color: #c0261c; }
+  .card.c1 { left: 0; top: 20px; transform: rotate(-14deg); }
+  .card.c2 { left: 58px; top: 8px; transform: rotate(8deg); }
+  .chips { position: absolute; right: 0; bottom: 0; width: 86px; height: 86px; }
+  .chip { position: absolute; width: 70px; height: 70px; border-radius: 50%; background: radial-gradient(circle, var(--c) 0 38%, #fff 39% 43%, var(--c) 44% 62%, transparent 63%), repeating-conic-gradient(var(--c) 0 22.5deg, #fff 22.5deg 45deg); box-shadow: 0 0 0 2px rgba(0,0,0,.15); }
+  /* ticket */
+  .ticket { width: 280px; display: flex; transform-origin: center; }
+  .ticket .main { flex: 1; padding: 14px 16px; background: #ffcf3d; border-radius: 8px 0 0 8px; background-image: radial-gradient(circle at 0 50%, transparent 9px, #ffcf3d 10px); }
+  .ticket .main small { display: block; font: 700 10px 'JetBrains Mono'; letter-spacing: .18em; }
+  .ticket .main b { display: block; margin: 4px 0; font: 900 28px/1 Inter; letter-spacing: -.03em; }
+  .ticket .stub { width: 64px; display: grid; place-items: center; background: #ff4f8b; color: #fff; border-left: 3px dashed #ffcf3d; border-radius: 0 8px 8px 0; font: 800 12px 'JetBrains Mono'; writing-mode: vertical-rl; letter-spacing: .2em; }
+  /* mug */
+  .mug { width: 170px; height: 150px; }
+  /* résumé */
+  .resume { width: 250px; height: 330px; padding: 26px 22px; background: #fffefb; box-shadow: inset 0 0 0 1px #ebe5d8; }
+  .resume h4 { margin: 0; font: 800 16px Inter; letter-spacing: .04em; }
+  .resume p { margin: 2px 0 12px; font: 500 8px 'JetBrains Mono'; color: #6b6458; }
+  .resume i { display: block; height: 5px; margin: 6px 0; background: #e6e0d4; border-radius: 3px; }
+  .resume i.h { width: 40%; height: 7px; background: #2a2520; margin-top: 14px; }
+  .resume i:nth-child(5n) { width: 82%; } .resume i:nth-child(3n) { width: 91%; }
+  .clip { position: absolute; top: -18px; left: 34px; width: 22px; height: 64px; border: 3px solid #9aa3ad; border-radius: 12px; border-bottom-color: transparent; }
+  /* phone */
+  .phone { width: 150px; height: 300px; padding: 10px; border-radius: 28px; background: #1d1f23; box-shadow: inset 0 0 0 2px #3a3d43; }
+  .phone .scr { height: 100%; border-radius: 20px; background: linear-gradient(180deg, #2f6fde, #7b4ddb); padding: 18px 12px; color: #fff; }
+  .phone .time { text-align: center; font: 300 40px/1 Inter; margin-top: 10px; }
+  .phone .date { text-align: center; font: 600 11px Inter; opacity: .85; }
+  .notif { margin-top: 26px; padding: 10px; border-radius: 12px; background: rgba(255,255,255,.82); color: #1b1612; font-size: 11px; line-height: 1.3; }
+  .notif b { display: block; font-size: 12px; }
+  .notif.ping { animation: ping 2.6s ease-in-out infinite; }
+  @keyframes ping { 0%, 70%, 100% { transform: none; } 75% { transform: translateX(-3px); } 80% { transform: translateX(3px); } 85% { transform: translateX(-2px); } 90% { transform: translateX(2px); } }
+  /* sticky note */
+  .note { width: 210px; height: 200px; padding: 20px 18px; background: linear-gradient(180deg, #fff27a, #ffe94d); font: 700 30px/1.05 Caveat, cursive; color: #2a2400; }
+  .note small { display: block; margin-top: 10px; font: 600 21px/1.1 Caveat; color: #4a4100; }
+  /* pencil + plant */
+  .pencil { width: 260px; height: 18px; border-radius: 3px; background: linear-gradient(180deg, #ffd23f, #f0b400); box-shadow: inset 0 -3px 0 rgba(0,0,0,.12); }
+  .pencil::before { content: ""; position: absolute; left: -26px; top: 0; border-right: 26px solid #f2d3a6; border-top: 9px solid transparent; border-bottom: 9px solid transparent; }
+  .pencil::after { content: ""; position: absolute; right: -22px; top: 0; width: 22px; height: 18px; background: linear-gradient(90deg, #b9bec5 0 40%, #ff8fa3 40%); border-radius: 0 4px 4px 0; }
+  .plant { width: 170px; height: 170px; }
+
+  /* ---------- zoom-into-object transition + section sheet ---------- */
+  .stage.zooming { transition: transform .9s cubic-bezier(.7,0,.2,1); }
+  .sheet { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: #fffaf0; opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+  .sheet.on { opacity: 1; pointer-events: auto; }
+  .sheet div { text-align: center; }
+  .sheet h2 { margin: 0; font: 900 clamp(48px, 7vw, 110px)/1 Inter; letter-spacing: -.06em; }
+  .sheet p { color: #6b6458; }
+  .sheet button { margin-top: 18px; padding: 14px 22px; border: 3px solid #1b1612; border-radius: 999px; background: #ffcf3d; font: 800 15px Inter; cursor: pointer; box-shadow: 4px 4px 0 #1b1612; }
+  .hint { position: fixed; z-index: 60; left: 50%; bottom: 18px; translate: -50% 0; padding: 10px 16px; border-radius: 999px; background: rgba(27, 22, 18, .85); color: #fffaf0; font: 600 13px Inter; }
+  @media (prefers-reduced-motion: reduce) { .notif.ping, .xl-fx span::after { animation: none; } }
+</style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false"><defs>
+<radialGradient id="lth-g" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#e65a4f"/><stop offset=".35" stop-color="#b81d22"/><stop offset=".75" stop-color="#7c0d12"/><stop offset="1" stop-color="#3e0507"/></radialGradient>
+<radialGradient id="lth-rim" cx="50%" cy="50%" r="50%"><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient>
+<radialGradient id="lth-shine" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<filter id="lth-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="2.4" numOctaves="2" seed="7" result="fine"/><feTurbulence type="fractalNoise" baseFrequency=".09" numOctaves="2" seed="3" result="wear"/><feColorMatrix in="fine" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .5 0" result="f"/><feColorMatrix in="wear" type="matrix" values="0 0 0 0 .15  0 0 0 0 0  0 0 0 0 0  0 0 0 .35 -.05" result="w"/><feComposite in="f" in2="SourceGraphic" operator="in" result="fc"/><feComposite in="w" in2="SourceGraphic" operator="in" result="wc"/><feBlend in="SourceGraphic" in2="fc" mode="multiply" result="a"/><feBlend in="a" in2="wc" mode="multiply"/></filter>
+<filter id="lth-soft"><feGaussianBlur stdDeviation="1.6"/></filter>
+<clipPath id="lth-clip"><circle cx="50" cy="50" r="46"/></clipPath>
+<g id="leather-ball">
+<circle cx="50" cy="50" r="46" fill="url(#lth-g)" filter="url(#lth-grain)"/>
+<g clip-path="url(#lth-clip)"><g transform="rotate(-22 50 50)">
+<path d="M55 50 C 68 44, 82 44, 96 48" fill="none" stroke="#3e0507" stroke-width=".9" opacity=".5"/><path d="M55 51.6 C 68 45.6, 82 45.6, 96 49.6" fill="none" stroke="#f1dfc0" stroke-width=".7" stroke-dasharray=".8 2" opacity=".55"/>
+<path d="M48 0 C 55 30, 55 70, 48 100" fill="none" stroke="#3a0406" stroke-width="9" opacity=".45" transform="translate(.8 .6)"/>
+<path d="M48 0 C 55 30, 55 70, 48 100" fill="none" stroke="#7a0f14" stroke-width="3.2"/>
+<path d="M48 0 C 55 30, 55 70, 48 100" fill="none" stroke="#d6453c" stroke-width="1.6" transform="translate(-.9 -.3)" opacity=".85"/>
+<path d="M50.65 2.77L53.57 3.44M53.39 2.27L55.92 2.86M55.93 1.82L58.07 2.31M47.44 3.45L45.05 5.26M44.74 4.12L42.66 5.68M42.23 4.74L40.47 6.06M51.30 5.89L54.21 6.62M54.04 5.45L56.57 6.07M56.59 5.04L58.73 5.57M48.08 6.52L45.65 8.28M45.36 7.13L43.26 8.66M42.84 7.71L41.06 9.00M51.90 9.07L54.79 9.85M54.65 8.67L57.16 9.35M57.21 8.31L59.33 8.88M48.66 9.64L46.21 11.36M45.94 10.21L43.81 11.70M43.41 10.74L41.61 12.00M52.45 12.30L55.33 13.13M55.21 11.95L57.71 12.66M57.77 11.63L59.89 12.23M49.21 12.82L46.72 14.50M46.47 13.34L44.32 14.79M43.94 13.83L42.11 15.06M52.95 15.58L55.82 16.45M55.72 15.27L58.20 16.03M58.28 14.99L60.39 15.63M49.70 16.04L47.19 17.68M46.96 16.52L44.78 17.94M44.42 16.97L42.58 18.17M53.41 18.91L56.26 19.82M56.18 18.64L58.65 19.43M58.75 18.40L60.84 19.07M50.15 19.32L47.61 20.92M47.40 19.75L45.20 21.14M44.85 20.16L42.99 21.33M53.82 22.27L56.66 23.23M56.59 22.04L59.05 22.88M59.17 21.84L61.25 22.55M50.56 22.63L47.99 24.19M47.80 23.02L45.58 24.37M45.25 23.39L43.37 24.54M54.18 25.67L57.01 26.67M56.96 25.48L59.41 26.35M59.53 25.32L61.61 26.05M50.91 25.98L48.33 27.50M48.15 26.33L45.91 27.65M45.59 26.66L43.70 27.78M54.49 29.09L57.31 30.14M57.27 28.95L59.71 29.85M59.85 28.83L61.91 29.59M51.22 29.36L48.62 30.85M48.46 29.67L46.20 30.96M45.89 29.97L43.98 31.06M54.76 32.55L57.56 33.63M57.54 32.45L59.97 33.38M60.12 32.36L62.17 33.15M51.49 32.77L48.86 34.22M48.72 33.04L46.44 34.30M46.15 33.30L44.22 34.36M54.98 36.03L57.76 37.15M57.76 35.96L60.17 36.93M60.34 35.91L62.39 36.73M51.70 36.20L49.06 37.61M48.93 36.44L46.64 37.66M46.36 36.66L44.42 37.70M55.15 39.52L57.92 40.68M57.94 39.49L60.33 40.50M60.52 39.47L62.55 40.32M51.88 39.65L49.21 41.03M49.10 39.85L46.79 41.04M46.52 40.04L44.57 41.05M55.28 43.03L58.03 44.22M58.06 43.04L60.45 44.07M60.64 43.05L62.66 43.93M52.00 43.12L49.32 44.46M49.22 43.27L46.90 44.44M46.64 43.43L44.68 44.41M55.36 46.54L58.09 47.78M58.14 46.59L60.51 47.66M60.72 46.64L62.73 47.55M52.08 46.59L49.38 47.89M49.30 46.71L46.96 47.84M46.72 46.83L44.74 47.79M55.39 50.07L58.11 51.33M58.17 50.15L60.53 51.25M60.75 50.24L62.75 51.16M52.11 50.07L49.39 51.33M49.33 50.15L46.97 51.25M46.75 50.24L44.75 51.16M55.38 53.59L58.08 54.89M58.16 53.71L60.50 54.84M60.74 53.83L62.72 54.78M52.09 53.54L49.36 54.77M49.31 53.59L46.94 54.66M46.73 53.64L44.72 54.54M55.31 57.10L58.00 58.44M58.09 57.26L60.42 58.42M60.67 57.42L62.64 58.40M52.03 57.02L49.28 58.21M49.25 57.03L46.87 58.06M46.67 57.04L44.65 57.92M55.20 60.61L57.87 61.99M57.98 60.81L60.29 62.00M60.56 61.00L62.51 62.01M51.93 60.48L49.16 61.64M49.14 60.45L46.75 61.46M46.56 60.43L44.53 61.28M55.05 64.11L57.70 65.52M57.82 64.34L60.12 65.57M60.39 64.57L62.34 65.60M51.77 63.93L48.99 65.05M48.99 63.87L46.58 64.84M46.41 63.81L44.37 64.63M54.85 67.59L57.47 69.03M57.62 67.86L59.89 69.11M60.19 68.12L62.11 69.18M51.57 67.36L48.77 68.45M48.79 67.26L46.37 68.20M46.21 67.17L44.16 67.96M54.60 71.04L57.20 72.53M57.36 71.35L59.62 72.64M59.93 71.65L61.84 72.74M51.33 70.77L48.51 71.82M48.55 70.63L46.11 71.53M45.97 70.51L43.91 71.27M54.30 74.47L56.89 75.99M57.06 74.82L59.30 76.14M59.62 75.15L61.52 76.27M51.03 74.16L48.21 75.16M48.26 73.98L45.81 74.84M45.68 73.81L43.61 74.55M53.96 77.87L56.52 79.43M56.71 78.26L58.93 79.62M59.27 78.63L61.15 79.78M50.70 77.51L47.85 78.47M47.92 77.29L45.46 78.12M45.35 77.08L43.26 77.79M53.57 81.24L56.11 82.84M56.32 81.67L58.52 83.06M58.87 82.08L60.73 83.25M50.31 80.83L47.46 81.74M47.54 80.56L45.07 81.35M44.97 80.32L42.88 80.99M53.13 84.56L55.64 86.20M55.87 85.04L58.05 86.46M58.42 85.49L60.26 86.69M49.88 84.10L47.01 84.97M47.12 83.79L44.63 84.55M44.55 83.51L42.44 84.15M52.65 87.85L55.13 89.52M55.38 88.37L57.53 89.82M57.92 88.85L59.74 90.08M49.41 87.33L46.52 88.16M46.65 86.98L44.15 87.69M44.08 86.66L41.97 87.26M52.12 91.08L54.57 92.80M54.84 91.65L56.97 93.14M57.37 92.18L59.17 93.44M48.88 90.51L45.99 91.29M46.13 90.11L43.62 90.79M43.57 89.75L41.45 90.32M51.54 94.26L53.97 96.03M54.25 94.88L56.36 96.40M56.77 95.45L58.55 96.74M48.32 93.64L45.41 94.36M45.57 93.19L43.05 93.82M43.02 92.78L40.89 93.31M50.91 97.39L53.31 99.20M53.62 98.05L55.69 99.62M56.12 98.67L57.88 100.00M47.70 96.71L44.78 97.38M44.97 96.21L42.43 96.79M42.42 95.75L40.28 96.25" stroke="#2a0204" stroke-width="1.15" stroke-linecap="round" opacity=".7"/>
+<path d="M50.15 2.07L53.07 2.74M52.89 1.57L55.42 2.16M55.43 1.12L57.57 1.61M46.94 2.75L44.55 4.56M44.24 3.42L42.16 4.98M41.73 4.04L39.97 5.36M50.80 5.19L53.71 5.92M53.54 4.75L56.07 5.37M56.09 4.34L58.23 4.87M47.58 5.82L45.15 7.58M44.86 6.43L42.76 7.96M42.34 7.01L40.56 8.30M51.40 8.37L54.29 9.15M54.15 7.97L56.66 8.65M56.71 7.61L58.83 8.18M48.16 8.94L45.71 10.66M45.44 9.51L43.31 11.00M42.91 10.04L41.11 11.30M51.95 11.60L54.83 12.43M54.71 11.25L57.21 11.96M57.27 10.93L59.39 11.53M48.71 12.12L46.22 13.80M45.97 12.64L43.82 14.09M43.44 13.13L41.61 14.36M52.45 14.88L55.32 15.75M55.22 14.57L57.70 15.33M57.78 14.29L59.89 14.93M49.20 15.34L46.69 16.98M46.46 15.82L44.28 17.24M43.92 16.27L42.08 17.47M52.91 18.21L55.76 19.12M55.68 17.94L58.15 18.73M58.25 17.70L60.34 18.37M49.65 18.62L47.11 20.22M46.90 19.05L44.70 20.44M44.35 19.46L42.49 20.63M53.32 21.57L56.16 22.53M56.09 21.34L58.55 22.18M58.67 21.14L60.75 21.85M50.06 21.93L47.49 23.49M47.30 22.32L45.08 23.67M44.75 22.69L42.87 23.84M53.68 24.97L56.51 25.97M56.46 24.78L58.91 25.65M59.03 24.62L61.11 25.35M50.41 25.28L47.83 26.80M47.65 25.63L45.41 26.95M45.09 25.96L43.20 27.08M53.99 28.39L56.81 29.44M56.77 28.25L59.21 29.15M59.35 28.13L61.41 28.89M50.72 28.66L48.12 30.15M47.96 28.97L45.70 30.26M45.39 29.27L43.48 30.36M54.26 31.85L57.06 32.93M57.04 31.75L59.47 32.68M59.62 31.66L61.67 32.45M50.99 32.07L48.36 33.52M48.22 32.34L45.94 33.60M45.65 32.60L43.72 33.66M54.48 35.33L57.26 36.45M57.26 35.26L59.67 36.23M59.84 35.21L61.89 36.03M51.20 35.50L48.56 36.91M48.43 35.74L46.14 36.96M45.86 35.96L43.92 37.00M54.65 38.82L57.42 39.98M57.44 38.79L59.83 39.80M60.02 38.77L62.05 39.62M51.38 38.95L48.71 40.33M48.60 39.15L46.29 40.34M46.02 39.34L44.07 40.35M54.78 42.33L57.53 43.52M57.56 42.34L59.95 43.37M60.14 42.35L62.16 43.23M51.50 42.42L48.82 43.76M48.72 42.57L46.40 43.74M46.14 42.73L44.18 43.71M54.86 45.84L57.59 47.08M57.64 45.89L60.01 46.96M60.22 45.94L62.23 46.85M51.58 45.89L48.88 47.19M48.80 46.01L46.46 47.14M46.22 46.13L44.24 47.09M54.89 49.37L57.61 50.63M57.67 49.45L60.03 50.55M60.25 49.54L62.25 50.46M51.61 49.37L48.89 50.63M48.83 49.45L46.47 50.55M46.25 49.54L44.25 50.46M54.88 52.89L57.58 54.19M57.66 53.01L60.00 54.14M60.24 53.13L62.22 54.08M51.59 52.84L48.86 54.07M48.81 52.89L46.44 53.96M46.23 52.94L44.22 53.84M54.81 56.40L57.50 57.74M57.59 56.56L59.92 57.72M60.17 56.72L62.14 57.70M51.53 56.32L48.78 57.51M48.75 56.33L46.37 57.36M46.17 56.34L44.15 57.22M54.70 59.91L57.37 61.29M57.48 60.11L59.79 61.30M60.06 60.30L62.01 61.31M51.43 59.78L48.66 60.94M48.64 59.75L46.25 60.76M46.06 59.73L44.03 60.58M54.55 63.41L57.20 64.82M57.32 63.64L59.62 64.87M59.89 63.87L61.84 64.90M51.27 63.23L48.49 64.35M48.49 63.17L46.08 64.14M45.91 63.11L43.87 63.93M54.35 66.89L56.97 68.33M57.12 67.16L59.39 68.41M59.69 67.42L61.61 68.48M51.07 66.66L48.27 67.75M48.29 66.56L45.87 67.50M45.71 66.47L43.66 67.26M54.10 70.34L56.70 71.83M56.86 70.65L59.12 71.94M59.43 70.95L61.34 72.04M50.83 70.07L48.01 71.12M48.05 69.93L45.61 70.83M45.47 69.81L43.41 70.57M53.80 73.77L56.39 75.29M56.56 74.12L58.80 75.44M59.12 74.45L61.02 75.57M50.53 73.46L47.71 74.46M47.76 73.28L45.31 74.14M45.18 73.11L43.11 73.85M53.46 77.17L56.02 78.73M56.21 77.56L58.43 78.92M58.77 77.93L60.65 79.08M50.20 76.81L47.35 77.77M47.42 76.59L44.96 77.42M44.85 76.38L42.76 77.09M53.07 80.54L55.61 82.14M55.82 80.97L58.02 82.36M58.37 81.38L60.23 82.55M49.81 80.13L46.96 81.04M47.04 79.86L44.57 80.65M44.47 79.62L42.38 80.29M52.63 83.86L55.14 85.50M55.37 84.34L57.55 85.76M57.92 84.79L59.76 85.99M49.38 83.40L46.51 84.27M46.62 83.09L44.13 83.85M44.05 82.81L41.94 83.45M52.15 87.15L54.63 88.82M54.88 87.67L57.03 89.12M57.42 88.15L59.24 89.38M48.91 86.63L46.02 87.46M46.15 86.28L43.65 86.99M43.58 85.96L41.47 86.56M51.62 90.38L54.07 92.10M54.34 90.95L56.47 92.44M56.87 91.48L58.67 92.74M48.38 89.81L45.49 90.59M45.63 89.41L43.12 90.09M43.07 89.05L40.95 89.62M51.04 93.56L53.47 95.33M53.75 94.18L55.86 95.70M56.27 94.75L58.05 96.04M47.82 92.94L44.91 93.66M45.07 92.49L42.55 93.12M42.52 92.08L40.39 92.61M50.41 96.69L52.81 98.50M53.12 97.35L55.19 98.92M55.62 97.97L57.38 99.30M47.20 96.01L44.28 96.68M44.47 95.51L41.93 96.09M41.92 95.05L39.78 95.55" stroke="#f7eedb" stroke-width="1.05" stroke-linecap="round"/>
+</g></g>
+<circle cx="50" cy="50" r="46" fill="url(#lth-rim)"/>
+<ellipse cx="34" cy="28" rx="13" ry="8" fill="url(#lth-shine)" transform="rotate(-32 34 28)" filter="url(#lth-soft)"/>
+<ellipse cx="31" cy="25" rx="4" ry="2.2" fill="#fff" opacity=".55" transform="rotate(-32 31 25)"/>
+</g></defs></svg>
+<div class="desk" aria-hidden="true"></div>
+
+<main class="stage" id="stage" aria-label="Meet's desk — each object opens a section">
+  <div class="obj" style="left:540px;top:40px;--r:-1deg" data-go="About · Meet Bhojani" tabindex="0" role="button" aria-label="Nameplate: about Meet">
+    <div class="shadowed plate"><div class="brass"><h1>MEET BHOJANI</h1><p>Finance × Systems · Penn State Smeal ’27</p></div></div>
+    <span class="label">About me <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:480px;top:230px;--r:2deg" data-go="Projects" tabindex="0" role="button" aria-label="Laptop: projects and stock of the day">
+    <div class="shadowed laptop">
+      <div class="lid"><div class="screen">
+        <div class="xl-bar"><i></i><i></i><i></i>meet-bhojani.xlsx</div>
+        <div class="xl-fx"><b>fx</b><span data-type>=MEET.BHOJANI()</span></div>
+        <div class="cells">
+          <span class="hd"></span><span class="hd">A</span><span class="hd">B</span><span class="hd">C</span><span class="hd">D</span>
+          <span class="hd">1</span><span><b>Project</b></span><span><b>Model</b></span><span><b>Output</b></span><span><b>Status</b></span>
+          <span class="hd">2</span><span>Amazon</span><span>5-yr DCF</span><span class="big" data-v="$158.20">$0.00</span><span>✓ done</span>
+          <span class="hd">3</span><span>Stock of day</span><span>55/45 score</span><span class="up" data-v="JNJ 4.87">—</span><span class="up">● live</span>
+          <span class="hd">4</span><span>Amber</span><span>Offline AI</span><span data-v="on-device">—</span><span>building</span>
+          <span class="hd">5</span><span class="sel">Next</span><span>You?</span><span></span><span></span>
+        </div>
+        <div class="xl-tabs"><span class="on">Projects</span><span>Experience</span><span>Interests</span><span>Contact</span></div>
+      </div></div>
+      <div class="deck"><div class="keys">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i class="w2"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i class="w2"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="w2"></i>
+        <i></i><i></i><i></i><i class="sp"></i><i></i><i></i><i></i><i></i>
+      </div><div class="pad"></div></div>
+    </div>
+    <span class="label">Projects + stock of the day <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:1180px;top:120px;--r:-28deg" data-go="F1 · Race weekend" tabindex="0" role="button" aria-label="F1 model car: race weekend">
+    <svg class="shadowed car" viewBox="0 0 140 300" aria-hidden="true">
+      <rect x="8" y="18" width="124" height="16" rx="4" fill="#111"/><rect x="20" y="4" width="100" height="16" rx="4" fill="#e10600"/>
+      <rect x="2" y="40" width="26" height="44" rx="8" fill="#151515"/><rect x="112" y="40" width="26" height="44" rx="8" fill="#151515"/>
+      <rect x="0" y="206" width="30" height="58" rx="9" fill="#151515"/><rect x="110" y="206" width="30" height="58" rx="9" fill="#151515"/>
+      <path d="M60 22 L80 22 L86 70 L96 120 L104 200 L98 262 L42 262 L36 200 L44 120 L54 70 Z" fill="#e10600"/>
+      <path d="M36 130 L18 150 L20 200 L38 210 Z M104 130 L122 150 L120 200 L102 210 Z" fill="#c10500"/>
+      <ellipse cx="70" cy="150" rx="14" ry="22" fill="#1d2530"/><circle cx="70" cy="146" r="9" fill="#ffd23f"/>
+      <path d="M52 130 Q70 112 88 130" stroke="#222" stroke-width="5" fill="none"/>
+      <rect x="10" y="268" width="120" height="24" rx="4" fill="#111"/><rect x="58" y="70" width="24" height="50" rx="6" fill="#fff" opacity=".85"/>
+      <text x="70" y="104" text-anchor="middle" font-family="Inter" font-weight="900" font-size="20" fill="#e10600">27</text>
+    </svg>
+    <span class="label">F1 race weekend <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:1250px;top:470px;--r:0deg" data-go="Cricket · Scoreboard" tabindex="0" role="button" aria-label="Cricket ball: India and IPL scoreboard">
+    <div class="shadowed ball"><svg viewBox="0 0 100 100"><use href="#leather-ball"/></svg></div>
+    <span class="label">Cricket scoreboard <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:1170px;top:640px;--r:6deg" data-go="Poker · Heads-up vs Meet" tabindex="0" role="button" aria-label="Poker chips and cards: play heads-up">
+    <div class="shadowed poker">
+      <div class="card c1">♠<small>A♠</small></div><div class="card c2 red">♥<small>K♥</small></div>
+      <div class="chips"><i class="chip" style="--c:#111;left:8px;top:10px"></i><i class="chip" style="--c:#0e7a43;left:4px;top:4px"></i><i class="chip" style="--c:#c0261c;left:0;top:0"></i></div>
+    </div>
+    <span class="label">Deal me in <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:760px;top:740px;--r:-7deg" data-go="Bollywood · Movie night" tabindex="0" role="button" aria-label="Cinema ticket: movie night">
+    <div class="shadowed ticket"><div class="main"><small>ADMIT ONE · BOLLYWOOD</small><b>Movie night</b><small>ROW M · SEAT 27</small></div><div class="stub">PICK A FILM</div></div>
+    <span class="label">Movie night <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:250px;top:180px;--r:0deg" data-go="About · Education" tabindex="0" role="button" aria-label="Penn State mug: education and about">
+    <svg class="shadowed mug" viewBox="0 0 170 150" aria-hidden="true">
+      <rect x="118" y="58" width="48" height="34" rx="16" fill="none" stroke="#1e3a6e" stroke-width="12"/>
+      <circle cx="70" cy="75" r="68" fill="#1e3a6e"/><circle cx="70" cy="75" r="58" fill="#5a3a22"/>
+      <circle cx="70" cy="75" r="58" fill="url(#coffee)"/><ellipse cx="52" cy="58" rx="16" ry="8" fill="rgba(255,240,220,.35)" transform="rotate(-30 52 58)"/>
+      <defs><radialGradient id="coffee" cx="40%" cy="38%" r="70%"><stop offset="0" stop-color="#8a5a32"/><stop offset=".7" stop-color="#4a2c16"/><stop offset="1" stop-color="#2e1a0c"/></radialGradient></defs>
+      <path id="rim" d="M70 75 m-63 0 a63 63 0 1 1 126 0 a63 63 0 1 1 -126 0" fill="none"/>
+      <text font-family="JetBrains Mono" font-weight="700" font-size="9" fill="#fff" letter-spacing="3"><textPath href="#rim">PENN STATE · SMEAL · CLASS OF 2027 · WE ARE ·</textPath></text>
+    </svg>
+    <span class="label">About + education <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:120px;top:430px;--r:-6deg" data-go="Experience" tabindex="0" role="button" aria-label="Résumé: experience">
+    <div class="shadowed resume"><span class="clip"></span><h4>MEET BHOJANI</h4><p>meetbhojani8989@gmail.com · Penn State Smeal</p>
+      <i class="h"></i><i></i><i></i><i></i><i class="h"></i><i></i><i></i><i></i><i></i><i class="h"></i><i></i><i></i><i></i><i></i><i></i></div>
+    <span class="label">Experience + résumé <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:1390px;top:250px;--r:9deg" data-go="Contact" tabindex="0" role="button" aria-label="Phone: contact Meet">
+    <div class="shadowed phone"><div class="scr"><div class="time" data-clock>9:41</div><div class="date">New message</div><div class="notif ping"><b>Meet Bhojani</b>Got a role in mind? Say hello →</div></div></div>
+    <span class="label">Say hello <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:330px;top:770px;--r:5deg" data-go="About · My story" tabindex="0" role="button" aria-label="Sticky note: Meet's story">
+    <div class="shadowed note">Hi, I’m Meet.<small>Finance student who builds models, tools &amp; software.</small></div>
+    <span class="label">My story <b>→</b></span>
+  </div>
+
+  <div class="obj" style="left:880px;top:660px;--r:-18deg"><div class="shadowed pencil" style="position:relative"></div></div>
+
+  <div class="obj" style="left:60px;top:40px;--r:0deg">
+    <svg class="shadowed plant" viewBox="0 0 170 170" aria-hidden="true">
+      <circle cx="85" cy="85" r="62" fill="#c4683c"/><circle cx="85" cy="85" r="52" fill="#5b3a24"/>
+      <g fill="#3f8f4a">
+        <ellipse cx="85" cy="48" rx="13" ry="34"/><ellipse cx="85" cy="122" rx="13" ry="34"/><ellipse cx="48" cy="85" rx="34" ry="13"/><ellipse cx="122" cy="85" rx="34" ry="13"/>
+        <ellipse cx="60" cy="60" rx="10" ry="30" transform="rotate(-45 60 60)" fill="#56a862"/><ellipse cx="110" cy="110" rx="10" ry="30" transform="rotate(-45 110 110)" fill="#56a862"/>
+        <ellipse cx="110" cy="60" rx="10" ry="30" transform="rotate(45 110 60)" fill="#56a862"/><ellipse cx="60" cy="110" rx="10" ry="30" transform="rotate(45 60 110)" fill="#56a862"/>
+        <circle cx="85" cy="85" r="12" fill="#6fc07a"/>
+      </g>
+    </svg>
+  </div>
+</main>
+
+<div class="light" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"><div><p>(in the real site this opens the full page)</p><h2 id="sheet-title">Projects</h2><button type="button" id="back">← Back to the desk</button></div></div>
+<p class="hint">Drag anything around the desk · click an object to open it</p>
+
+<script>
+  const stage = document.getElementById('stage');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let scale = 1;
+  const fit = () => { scale = Math.min(innerWidth / 1600, innerHeight / 1000) * 1.02; stage.style.transform = `translate(-50%, -50%) scale(${scale})`; };
+  fit(); addEventListener('resize', fit);
+
+  // intro: objects drop onto the desk one by one, then the laptop "boots"
+  const objs = [...stage.querySelectorAll('.obj')];
+  if (!reduced) objs.forEach((o, i) => {
+    o.animate([{ transform: `rotate(var(--r)) translateY(-60px) scale(1.25)`, opacity: 0 }, { transform: `rotate(var(--r)) translateY(4px) scale(.98)`, opacity: 1, offset: .7 }, { transform: `rotate(var(--r))`, opacity: 1 }],
+      { duration: 700, delay: 150 + i * 110, easing: 'cubic-bezier(.3,1.3,.5,1)', fill: 'backwards' });
+  });
+  // laptop: formula types itself, then the cells fill in
+  const fx = document.querySelector('[data-type]'); const formula = fx.textContent; fx.textContent = '';
+  [...formula].forEach((ch, i) => setTimeout(() => { fx.textContent += ch; }, 1600 + i * 70));
+  document.querySelectorAll('[data-v]').forEach((c, i) => setTimeout(() => { c.textContent = c.dataset.v; c.animate([{ background: '#d9f2e3' }, { background: '#fff' }], { duration: 900 }); }, 2900 + i * 350));
+
+  // drag with momentum; a click without much movement "opens" the object
+  objs.forEach((o) => {
+    let sx, sy, ox, oy, moved = 0, vx = 0, vy = 0, lx, ly, lt;
+    o.addEventListener('pointerdown', (e) => {
+      o.setPointerCapture(e.pointerId); o.classList.add('dragging');
+      sx = e.clientX; sy = e.clientY; ox = parseFloat(o.style.left); oy = parseFloat(o.style.top); moved = 0; lx = sx; ly = sy; lt = performance.now();
+    });
+    o.addEventListener('pointermove', (e) => {
+      if (!o.classList.contains('dragging')) return;
+      const dx = (e.clientX - sx) / scale, dy = (e.clientY - sy) / scale; moved = Math.max(moved, Math.hypot(dx, dy));
+      o.style.left = `${ox + dx}px`; o.style.top = `${oy + dy}px`;
+      const now = performance.now(), dt = Math.max(1, now - lt); vx = (e.clientX - lx) / dt; vy = (e.clientY - ly) / dt; lx = e.clientX; ly = e.clientY; lt = now;
+    });
+    o.addEventListener('pointerup', () => {
+      o.classList.remove('dragging');
+      if (moved < 6) { open(o); return; }
+      if (reduced) return;
+      // toss: glide on with friction and a little spin
+      let px = parseFloat(o.style.left), py = parseFloat(o.style.top), r = parseFloat(getComputedStyle(o).getPropertyValue('--r')) || 0;
+      const spin = vx * 6;
+      const step = () => { vx *= 0.92; vy *= 0.92; px += vx * 16 / scale; py += vy * 16 / scale; r += spin * Math.hypot(vx, vy) * .3;
+        px = Math.max(-80, Math.min(1500, px)); py = Math.max(-40, Math.min(900, py));
+        o.style.left = `${px}px`; o.style.top = `${py}px`; o.style.setProperty('--r', `${r}deg`);
+        if (Math.hypot(vx, vy) > 0.02) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+    o.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(o); } });
+  });
+
+  // "camera" zooms into the object, then the section opens
+  const sheet = document.getElementById('sheet');
+  function open(o) {
+    if (!o.dataset.go) return;
+    const r = o.getBoundingClientRect();
+    const cx = r.left + r.width / 2 - innerWidth / 2, cy = r.top + r.height / 2 - innerHeight / 2;
+    document.getElementById('sheet-title').textContent = o.dataset.go;
+    if (reduced) { sheet.classList.add('on'); return; }
+    stage.classList.add('zooming');
+    stage.style.transform = `translate(calc(-50% - ${cx * 3}px), calc(-50% - ${cy * 3}px)) scale(${scale * 3.2})`;
+    setTimeout(() => sheet.classList.add('on'), 650);
+  }
+  document.getElementById('back').addEventListener('click', () => { sheet.classList.remove('on'); stage.style.transform = `translate(-50%, -50%) scale(${scale})`; setTimeout(() => stage.classList.remove('zooming'), 900); });
+  setInterval(() => { const d = new Date(); document.querySelector('[data-clock]').textContent = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }).replace(/\s?[AP]M/, ''); }, 1000);
+</script>
+</body>
+</html>

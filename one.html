@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fafafa">
+<title>Meet Bhojani — Finance &amp; Systems</title>
+<meta name="description" content="Meet Bhojani is a finance student at Penn State Smeal who builds valuation models, analytics tools and local-first software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,700&display=swap">
+<link rel="stylesheet" href="first.css">
+<link rel="stylesheet" href="one.css">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&matchMedia('(min-width: 901px)').matches){document.documentElement.classList.add('hx');setTimeout(function(){if(!window.__oneReady)document.documentElement.classList.remove('hx')},3000)}</script>
+<script defer src="vendor/framer-motion.dom.js"></script>
+<script defer src="market.js"></script>
+<script defer src="one.js"></script>
+<script defer src="chat.js"></script>
+</head>
+<body class="one">
+<a class="skip" href="#intro">Skip to content</a>
+
+<header class="hnav" aria-label="Primary">
+<a class="hnav-mark" href="#intro">Meet B.</a>
+<nav class="hnav-links">
+<a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#interests">Interests</a><a href="#contact">Contact</a>
+</nav>
+<a class="hnav-cta" href="Meet-Bhojani-Resume.pdf" download>Résumé <span aria-hidden="true">↓</span></a>
+</header>
+
+<main id="main">
+
+<!-- 01 · Intro -->
+<section class="hpanel p-intro" id="intro" aria-labelledby="intro-title" data-label="Intro">
+<p class="hghost" aria-hidden="true">Finance</p>
+<div class="intro-inner">
+<p class="kick" data-in>Finance · Penn State Smeal · Class of 2027</p>
+<h1 id="intro-title" class="intro-name" data-split>Meet <em>Bhojani</em></h1>
+<p class="intro-lead" data-in>A finance student who builds valuation models, analytics tools and local-first software.</p>
+<div class="intro-actions" data-in>
+<a class="pill" href="#work">See the work <span aria-hidden="true">→</span></a>
+<a class="ghost-link" href="#contact">Get in touch</a>
+</div>
+</div>
+<p class="scroll-hint" aria-hidden="true"><span>Scroll</span><i></i></p>
+</section>
+
+<!-- Market tape between the intro and the statement -->
+<div class="ticker" aria-label="Live prices from the portfolio model"><div class="ticker-track"></div></div>
+
+<!-- 02 · Statement -->
+<section class="hpanel p-statement" aria-label="How I work" data-label="Approach">
+<svg class="candles" aria-hidden="true" preserveAspectRatio="none"></svg>
+<div class="flapboard flap-big" data-flap="big" role="img" aria-label="Departure board: open to internships, graduating 2027, Finance at Penn State Smeal. Build the model, test the assumptions, make the tool."><div class="flap-head"><span><i class="live-dot"></i>Open to internships</span><span>Graduating 2027</span><span>Penn State Smeal · Finance</span></div></div>
+<p class="stmt vh" data-words>I like problems that sit between disciplines, where a spreadsheet, a market and a piece of software all have to agree. I build the model, test the assumptions, then make the tool that makes the answer obvious.</p>
+</section>
+
+<!-- 03 · Work: pinned, travels sideways -->
+<div class="h-scroller" aria-label="Selected work">
+<div class="h-pin">
+<div class="h-track">
+<section class="hpanel p-work-intro" id="work" aria-labelledby="work-title" data-label="Work">
+<p class="hghost" aria-hidden="true">Work</p>
+<p class="kick" data-in>Selected work · 2026</p>
+<h2 id="work-title" class="big" data-split>Three questions, <em>three tools.</em></h2>
+<p class="work-note" data-in>Each one started with a question I couldn’t answer with an existing tool, so I built the tool.</p>
+<ol class="windex" aria-label="The three projects">
+<li><a href="#proj-amazon"><span class="wx-no">01</span><span class="wx-name">Amazon</span><span class="wx-tag">Valuation</span><span class="wx-arrow" aria-hidden="true">→</span><i class="wx-fill" aria-hidden="true"></i></a></li>
+<li><a href="#proj-portfolio"><span class="wx-no">02</span><span class="wx-name">Portfolio</span><span class="wx-tag">Analytics</span><span class="wx-arrow" aria-hidden="true">→</span><i class="wx-fill" aria-hidden="true"></i></a></li>
+<li><a href="#proj-amber"><span class="wx-no">03</span><span class="wx-name">Amber</span><span class="wx-tag">Software</span><span class="wx-arrow" aria-hidden="true">→</span><i class="wx-fill" aria-hidden="true"></i></a></li>
+</ol>
+</section>
+
+<article class="hpanel p-project" id="proj-amazon" aria-labelledby="p1-title" data-label="Amazon">
+<div class="proj-copy">
+<p class="proj-no" aria-hidden="true">01</p>
+<p class="kick" data-in>January 2026 · Valuation</p>
+<h3 id="p1-title" class="proj-title" data-split>Amazon <em>equity valuation</em></h3>
+<p data-in>A five-year DCF and comparable-company model. AWS is 17% of revenue but 55% of operating income, and that mix shift drives the whole valuation.</p>
+<p class="proj-stat" data-in><b data-count="158.20" data-prefix="$">$158.20</b><span>intrinsic value per share</span></p>
+<a class="ghost-link" href="amazon.html">Read the case study <span aria-hidden="true">→</span></a>
+</div>
+<figure class="proj-fig" data-in data-tilt>
+<p class="fig-label">Free cash flow forecast · $ billions</p>
+<div class="hbars" role="img" aria-label="Free cash flow grows from 55.7 billion dollars in 2026 to 91.2 billion in 2030">
+<div class="hbar" style="--v:.611"><b>55.7</b><i></i><small>2026E</small></div>
+<div class="hbar" style="--v:.689"><b>62.8</b><i></i><small>2027E</small></div>
+<div class="hbar" style="--v:.777"><b>70.9</b><i></i><small>2028E</small></div>
+<div class="hbar" style="--v:.880"><b>80.3</b><i></i><small>2029E</small></div>
+<div class="hbar" style="--v:1"><b>91.2</b><i></i><small>2030E</small></div>
+</div>
+</figure>
+</article>
+
+<article class="hpanel p-project" id="proj-portfolio" aria-labelledby="p2-title" data-label="Portfolio">
+<div class="proj-copy">
+<p class="proj-no" aria-hidden="true">02</p>
+<p class="kick" data-in>April 2026 · Analytics</p>
+<h3 id="p2-title" class="proj-title" data-split>Portfolio <em>analytics platform</em></h3>
+<p data-in>My Excel trading model, now running live. Every day it scores ten stocks on return, volatility, Sharpe and drawdown, then picks a stock of the day.</p>
+<p class="proj-stat" data-in><b data-count="10">10</b><span>stocks scored every day</span></p>
+<a class="ghost-link" href="portfolio.html">Run the model <span aria-hidden="true">→</span></a>
+</div>
+<figure class="proj-fig proj-fig-live" data-in data-tilt>
+<div class="sotd" data-sotd aria-live="polite"></div>
+</figure>
+</article>
+
+<article class="hpanel p-project p-amber" id="proj-amber" aria-labelledby="p3-title" data-label="Amber">
+<div class="proj-copy">
+<p class="proj-no" aria-hidden="true">03</p>
+<p class="kick" data-in>September 2026 — now · Software</p>
+<h3 id="p3-title" class="proj-title" data-split>Amber, <em>an offline assistant</em></h3>
+<p data-in>An assistant that lives on your Mac. Talk to it, point at the screen, swipe through slides from across the room, and it checks that each action worked before it says so.</p>
+<p class="proj-stat" data-in><b>On-device</b><span>Tauri · TypeScript · Swift</span></p>
+<a class="ghost-link" href="intelligence.html">Read the case study <span aria-hidden="true">→</span></a>
+</div>
+<figure class="proj-fig amber-orb" data-in aria-hidden="true">
+<div class="orb-core"><img src="logos/amber.png" alt="" width="480" height="480"></div>
+<div class="orb-ring"><span style="--k:0">Voice</span><span style="--k:1">Hands</span><span style="--k:2">Slides</span><span style="--k:3">Screen</span><span style="--k:4">Memory</span><span style="--k:5">Verify</span></div>
+</figure>
+</article>
+
+</div>
+</div>
+</div>
+
+<!-- 04 · Experience -->
+<section class="hpanel p-exp" id="experience" aria-labelledby="exp-title" data-label="Experience">
+<div class="yrs-pin">
+<div class="yrs-flood" aria-hidden="true"></div>
+<p class="hghost" aria-hidden="true">Experience</p>
+<div class="yrs-left">
+<p class="kick" data-in>Experience</p>
+<h2 id="exp-title" class="big" data-split>Both sides of <em>one business.</em></h2>
+<p class="work-note" data-in>Two summers inside a cotton ginning and edible oil manufacturer in Gujarat, first selling the product, then reading its numbers.</p>
+<p class="odo" aria-hidden="true"><span class="odo-fixed"><span>2</span><span>0</span><span>2</span></span><span class="odo-win"><span class="odo-col"><b>5</b><b>6</b></span></span></p>
+</div>
+<div class="yrs-right">
+<div class="flapboard flap-role" data-flap="role" aria-hidden="true"></div>
+<div class="yrs-roles">
+<article class="role yrole on" data-tilt>
+<p class="role-year" aria-hidden="true">2025</p>
+<p class="kick">May — Aug 2025 · Gujarat, India</p>
+<h3>Marketing Intern</h3>
+<p class="role-org">Shree Gita Ginning &amp; Oil Industries</p>
+<ul>
+<li>Led an eight-episode digital campaign for a brand relaunch.</li>
+<li>Collaborated on a product redesign projected to increase retail presence by 30%.</li>
+<li>Analyzed procurement cycles and retail partnerships, including distribution with Reliance Mart.</li>
+</ul>
+</article>
+<article class="role yrole" data-tilt>
+<p class="role-year" aria-hidden="true">2026</p>
+<p class="kick">May — Aug 2026 · Gujarat, India</p>
+<h3>Finance Intern</h3>
+<p class="role-org">Shree Gita Ginning &amp; Oil Industries</p>
+<ul>
+<li>Built structured Excel models tracking revenue, production volumes and segment performance.</li>
+<li>Examined period-over-period financials to find cost and revenue trends.</li>
+<li>Turned the findings into insights for senior management.</li>
+</ul>
+</article>
+</div>
+</div>
+<div class="yrs-path" aria-hidden="true"><i><b></b></i><span class="yp-a">Summer 2025 · Selling it</span><span class="yp-b">Summer 2026 · Reading its numbers</span><em class="yp-dot"></em></div>
+</div>
+</section>
+
+<!-- 05 · About -->
+<section class="hpanel p-about" id="about" aria-labelledby="about-title" data-label="About">
+<figure class="about-photo" data-in><img src="meet-bhojani-portrait.jpg" alt="Portrait of Meet Bhojani" width="1204" height="1400"></figure>
+<div class="about-text">
+<p class="kick" data-in>About</p>
+<h2 id="about-title" class="big" data-split>The numbers, and the people <em>behind them.</em></h2>
+<p class="about-degree" data-in><b>B.S. Finance</b> · Penn State · Smeal College of Business · Class of 2027</p>
+<div class="about-story" data-in>
+<p class="about-first">I’m a finance student at Penn State Smeal who is most at home with the questions that don’t have an easy answer.</p>
+<p>I’ve always been the person who asks one more “why.” Why does this number look the way it does? Who made the decision behind it? What would change if we looked at it differently? To me, finance isn’t just models and margins. It’s a way of understanding how people make choices, and how to help them make better ones.</p>
+<p>I’m curious by nature and a builder by habit. When something doesn’t make sense, I take it apart until it does. When the tool I need doesn’t exist, I try to create it. I’d rather learn something hard than do something easy, and I’m comfortable being the least experienced person in the room, because that’s usually where I learn the most.</p>
+<p>The people I work with would probably describe me as calm, dependable and quick to pick things up. I take ownership of what’s in front of me, I’m honest about what I don’t know, and I care about doing the work well, not just getting it done.</p>
+<p>I’m happiest where finance and technology meet, and where something complicated finally becomes clear. Most of all, I’m looking for a team that cares about getting things right, and a chance to grow alongside them.</p>
+</div>
+</div>
+</section>
+
+<!-- 06 · Education + numbers -->
+<section class="hpanel p-facts" aria-label="At a glance" data-label="Education">
+<div class="facts-row">
+<p class="hfact" data-in><b data-count="2027" data-from="2000">2027</b><span>Class of, B.S. Finance</span></p>
+<p class="hfact" data-in><b data-count="3">3</b><span>Independent projects in 2026</span></p>
+<p class="hfact" data-in><b data-count="2">2</b><span>Internships, finance and marketing</span></p>
+</div>
+<div class="schools-row">
+<article class="hschool" data-in><img src="logos/psu.png" alt="Penn State logo" width="640" height="480" loading="lazy"><div><h3>The Pennsylvania State University</h3><p>Smeal College of Business · B.S. Finance · Real Estate Analysis &amp; Development Certificate · 2024 — 2027</p></div></article>
+<article class="hschool" data-in><img src="logos/gsis.png" alt="Good Shepherd International School crest" width="422" height="480" loading="lazy"><div><h3>Good Shepherd International School</h3><p>High school · 2019 — 2024</p></div></article>
+</div>
+</section>
+
+<!-- 07 · Interests: pinned, travels sideways -->
+<div class="h-scroller" aria-label="Interests">
+<div class="h-pin">
+<div class="h-track">
+<section class="hpanel p-interests" id="interests" aria-labelledby="int-title" data-label="Interests">
+<p class="hghost" aria-hidden="true">Off the clock</p>
+<div class="int-head">
+<p class="kick" data-in>Off the clock</p>
+<h2 id="int-title" class="big" data-split>Things I <em>love.</em></h2>
+<a class="ghost-link" href="interests.html">Play poker against me, check live F1 and cricket <span aria-hidden="true">→</span></a>
+</div>
+</section>
+<section class="hpanel p-int-cards" aria-label="Interests" data-label="Interests">
+<ul class="int-row">
+<li data-in><b>F1</b><span>Never miss a race weekend</span></li>
+<li data-in><b>Cricket</b><span>India and IPL, every big match</span></li>
+<li data-in><b>Poker</b><span>Always up for a hand</span></li>
+<li data-in><b>Basketball</b><span>Play regularly</span></li>
+<li data-in><b>Pickleball</b><span>Play regularly</span></li>
+<li data-in><b>Bollywood</b><span>Always a film queued up</span></li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+
+<!-- 08 · Contact -->
+<section class="hpanel p-contact" id="contact" aria-labelledby="contact-title" data-label="Contact">
+<p class="kick" data-in>Contact</p>
+
+<svg class="seal seal-contact" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="seal-b" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#seal-b">OPEN TO INTERNSHIPS · CLASS OF 2027 · </textPath></text><circle cx="100" cy="100" r="9"/></svg>
+<h2 id="contact-title" class="htalk" data-split>Let’s <em>talk.</em></h2>
+<p class="contact-lead" data-in>Interested in a conversation about finance, systems, or what comes next? It goes straight to my inbox.</p>
+<p class="contact-mail" data-in><a href="mailto:meetbhojani8989@gmail.com">meetbhojani8989@gmail.com</a></p>
+<div class="hlinks" data-in>
+<button class="pill" type="button" data-copy="meetbhojani8989@gmail.com"><span class="copy-label">Copy email</span><span class="copy-done" aria-hidden="true">Copied ✓</span></button>
+<a class="ghost-link" href="https://www.linkedin.com/in/meetbhojani" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+<a class="ghost-link" href="Meet-Bhojani-Resume.pdf" download>Résumé <span aria-hidden="true">↓</span></a>
+</div>
+<p class="foot">© 2026 Meet Bhojani · Penn State · Smeal College of Business</p>
+</section>
+
+</main>
+
+<div class="hprogress" aria-hidden="true"><span class="hp-label">Intro</span><i><b></b></i><span class="hp-count">01 / 09</span></div>
+</body>
+</html>

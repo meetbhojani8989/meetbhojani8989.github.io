@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portfolio Analytics · Meet Bhojani</title>
+<meta name="description" content="Meet Bhojani’s trading model running live: a daily stock of the day and a checker for any stock.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,700&display=swap">
+<link rel="stylesheet" href="first.css">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion');setTimeout(function(){if(!window.__motionReady)document.documentElement.classList.remove('motion')},2500)}</script>
+<script defer src="vendor/framer-motion.dom.js"></script>
+<script defer src="market.js"></script>
+<script defer src="interests.js"></script>
+<script defer src="site.js"></script>
+<script defer src="chat.js"></script>
+<script>/* arriving through the stripes: start covered so nothing flashes before they lift */try{if(sessionStorage.getItem('signal-wipe')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('arriving')}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Primary">
+<span class="glass-lens" aria-hidden="true"></span>
+<a class="wordmark" href="index.html">Meet Bhojani</a>
+<div class="nav-links"><a href="index.html#about">About</a><a href="index.html#career">Career</a><a href="index.html#experience">Experience</a><a href="projects.html">Projects</a><a href="interests.html">Interests</a><a href="index.html#contact">Contact</a></div>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-sheet">Menu<i aria-hidden="true"></i></button>
+<a class="btn-dark" href="Meet-Bhojani-Resume.pdf" download data-press>Resume <span aria-hidden="true">↓</span></a>
+</nav>
+<div class="nav-sheet" id="nav-sheet" hidden><a href="index.html#about">About<small>01</small></a><a href="index.html#career">Career<small>02</small></a><a href="index.html#experience">Experience<small>03</small></a><a href="projects.html">Projects<small>04</small></a><a href="interests.html">Interests<small>05</small></a><a href="index.html#contact">Contact<small>06</small></a></div>
+<main id="main" tabindex="-1" class="page shell">
+<a class="back" href="projects.html" data-reveal data-press data-magnetic><span class="arrow" aria-hidden="true">←</span> Back to projects</a>
+<article class="project" style="view-transition-name: case-portfolio">
+<div>
+<p class="meta" data-reveal>02 · April 2026 · Independent project</p>
+<h1 data-lines><span class="line"><span>Portfolio</span></span><span class="line"><span><em>analytics.</em></span></span></h1>
+<p data-reveal>My Excel trading model, rebuilt to run live in the browser. Every day it pulls a year of prices for ten stocks, runs the same maths as the workbook, and picks a stock of the day. You can run it on any company, too.</p>
+<p class="meta method" data-reveal>Live prices · return · volatility · Sharpe · drawdown · 55/45 score</p>
+</div>
+<div class="model" data-tilt data-reveal><div class="sotd" data-sotd aria-live="polite"></div></div>
+</article>
+<div class="case"><section class="case-section" data-reveal><h2 class="meta">Why today’s pick</h2><div><p class="sotd-story" data-story aria-live="polite"></p><div data-ranking style="margin-top:24px"></div></div></section><section class="case-section" data-reveal><h2 class="meta">Check any stock</h2><div><div class="checker"><form class="check-form" data-checker><label class="sr-only" for="ck">Company or ticker</label><div class="field-inline"><input id="ck" placeholder="Company or ticker, e.g. Apple, KO, Nvidia" autocomplete="off" maxlength="60"></div><button class="btn-pill" type="submit" data-press>Run the model <span class="arrow" aria-hidden="true">→</span></button><div class="try"><span class="meta" style="align-self:center">Try:</span><button type="button" data-try="Apple">Apple</button><button type="button" data-try="Coca-Cola">Coca-Cola</button><button type="button" data-try="Tesla">Tesla</button><button type="button" data-try="Nvidia">Nvidia</button><button type="button" data-try="Costco">Costco</button></div><p class="check-status" role="status" aria-live="polite"></p></form><div data-check-out></div><p class="disclaimer">An educational model built from my trading workbook, not investment advice.</p></div></div></section><section class="case-section" data-reveal><h2 class="meta">How a signal is made</h2><div><ol class="steps"><li><b>Pull</b>A year of daily closing prices for the stock.</li><li><b>Measure</b>1-year return, annualized volatility, Sharpe ratio (4% risk-free) and maximum drawdown.</li><li><b>Score</b>Final score = 55% return score + 45% risk score, out of 5.</li><li><b>Decide</b>Passes, Watch or Weak screen, plus the first risk limit it breaks.</li></ol></div></section><section class="case-section" data-reveal><h2 class="meta">Risk limits</h2><div><dl class="spec"><div><dt>Risk-free rate</dt><dd>4%</dd></div><div><dt>Target annual return</dt><dd>10%</dd></div><div><dt>Maximum volatility</dt><dd>35%</dd></div><div><dt>Maximum position weight</dt><dd>20%</dd></div><div><dt>Maximum drawdown</dt><dd>−30%</dd></div><div><dt>Minimum Sharpe</dt><dd>0.75</dd></div></dl></div></section><section class="case-section" data-reveal><h2 class="meta">Portfolio map</h2><div><div class="model" data-model="scatter" style="height:420px"><p class="meta">Workbook snapshot · 10 holdings · 1Y return vs. volatility</p><div class="viz"><div class="scatter" role="img" aria-label="Scatter of ten holdings by volatility and one-year return, with a 35 percent volatility limit"></div></div></div></div></section><section class="case-section" data-reveal><h2 class="meta">Portfolio weights</h2><div><div class="holdings"><div class="holding"><span>AAPL</span><i style="--v:0.903"></i><b>18.1%</b></div><div class="holding"><span>MSFT</span><i style="--v:0.711"></i><b>14.2%</b></div><div class="holding"><span>GOOGL</span><i style="--v:0.565"></i><b>11.3%</b></div><div class="holding"><span>NVDA</span><i style="--v:0.510"></i><b>10.2%</b></div><div class="holding"><span>AMZN</span><i style="--v:0.418"></i><b>8.4%</b></div><div class="holding"><span>TSLA</span><i style="--v:0.406"></i><b>8.1%</b></div><div class="holding"><span>XOM</span><i style="--v:0.396"></i><b>7.9%</b></div><div class="holding"><span>KO</span><i style="--v:0.391"></i><b>7.8%</b></div><div class="holding"><span>JPM</span><i style="--v:0.353"></i><b>7.1%</b></div><div class="holding"><span>JNJ</span><i style="--v:0.346"></i><b>6.9%</b></div></div><p>Every position stays under the 20% cap. The add/swap tester re-computes return, volatility and 1-day 95% VaR for a candidate before it enters the book.</p></div></section></div>
+</main>
+</body>
+</html>

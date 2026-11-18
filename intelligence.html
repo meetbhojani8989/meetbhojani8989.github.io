@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amber · Personal AI Assistant · Meet Bhojani</title>
+<meta name="description" content="Amber: Meet Bhojani’s offline personal AI assistant for macOS, voice, hands, slides and screen help, all on-device.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,700&display=swap">
+<link rel="stylesheet" href="first.css">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion');setTimeout(function(){if(!window.__motionReady)document.documentElement.classList.remove('motion')},2500)}</script>
+<script defer src="vendor/framer-motion.dom.js"></script>
+<script defer src="market.js"></script>
+<script defer src="interests.js"></script>
+<script defer src="site.js"></script>
+<script defer src="chat.js"></script>
+<script>/* arriving through the stripes: start covered so nothing flashes before they lift */try{if(sessionStorage.getItem('signal-wipe')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('arriving')}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Primary">
+<span class="glass-lens" aria-hidden="true"></span>
+<a class="wordmark" href="index.html">Meet Bhojani</a>
+<div class="nav-links"><a href="index.html#about">About</a><a href="index.html#career">Career</a><a href="index.html#experience">Experience</a><a href="projects.html">Projects</a><a href="interests.html">Interests</a><a href="index.html#contact">Contact</a></div>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-sheet">Menu<i aria-hidden="true"></i></button>
+<a class="btn-dark" href="Meet-Bhojani-Resume.pdf" download data-press>Resume <span aria-hidden="true">↓</span></a>
+</nav>
+<div class="nav-sheet" id="nav-sheet" hidden><a href="index.html#about">About<small>01</small></a><a href="index.html#career">Career<small>02</small></a><a href="index.html#experience">Experience<small>03</small></a><a href="projects.html">Projects<small>04</small></a><a href="interests.html">Interests<small>05</small></a><a href="index.html#contact">Contact<small>06</small></a></div>
+<main id="main" tabindex="-1" class="page shell">
+<a class="back" href="projects.html" data-reveal data-press data-magnetic><span class="arrow" aria-hidden="true">←</span> Back to projects</a>
+<article class="project" style="view-transition-name: case-amber">
+<div>
+<p class="meta" data-reveal>03 · Sep 2026 to present · Independent project</p>
+<h1 data-lines><span class="line"><span>Amber.</span></span><span class="line"><span><em>personal AI assistant</em></span></span></h1>
+<p data-reveal>An offline personal assistant that lives on your Mac. Ask it to do things, point and pinch to click, swipe through slides from across a conference table, or have it explain what’s on screen, all processed on-device, and verified before Amber says it’s done.</p>
+<p class="meta method" data-reveal>Tauri · TypeScript · Swift · on-device · verification</p>
+</div>
+<div class="model model-dark" data-tilt data-model="amber" data-reveal><p class="meta">Amber · personal AI assistant</p><div class="amber"><div class="amber-orbit"><div class="amber-core"><img src="logos/amber.png" alt="Amber logo" width="480" height="480"></div><span class="amber-node" style="--a:0deg">VOICE</span><span class="amber-node" style="--a:60deg">HANDS</span><span class="amber-node" style="--a:120deg">SLIDES</span><span class="amber-node" style="--a:180deg">BAT MODE</span><span class="amber-node" style="--a:240deg">SCREEN</span><span class="amber-node" style="--a:300deg">MEMORY</span></div><div class="amber-say" aria-live="off"><p class="you"></p><p class="bot"></p></div></div></div>
+</article>
+<div class="case"><section class="case-section" data-reveal><h2 class="meta">What it does</h2><div><div class="cards"><div class="card"><p class="meta">Voice</p><h3>Commands</h3><p>Native transcription, local speech feedback, cancellation and live activity.</p></div><div class="card"><p class="meta">Camera</p><h3>Hand tracking</h3><p>Landmarks drive the cursor: pinch to click and drag, scroll, zoom, open palm to cancel.</p></div><div class="card"><p class="meta">Screen</p><h3>Screen tutor</h3><p>Select part of the screen; local OCR and vision explain it with overlays and speech.</p></div><div class="card"><p class="meta">Memory</p><h3>Learns corrections</h3><p>Stores corrections and verified experiences locally.</p></div></div></div></section><section class="case-section" data-reveal><h2 class="meta">Presentation mode</h2><div><p>Swipe an open hand along the table, or two fingers in the air, to change slides in Keynote, PowerPoint, Safari, Chrome, Edge, Firefox or Preview. A shared cooldown stops double-skips, and stale, weak, vertical or multi-person strokes are rejected.</p></div></section><section class="case-section" data-reveal><h2 class="meta">Bat Mode &amp; Tap Anywhere</h2><div><p>Amber plays a tone through the laptop speaker and listens to the Doppler shift of the reflection, so it can sense push/pull motion even when your hand is outside the camera. Tap Anywhere learns two spots on the table (eight taps each) for next and previous.</p></div></section><section class="case-section" data-reveal><h2 class="meta">Built to be trusted</h2><div><ul class="chips"><li>Camera frames never stored</li><li>Raw audio never leaves the mic pipeline</li><li>Explicit permissions</li><li>Gesture cancelled when tracking is lost</li><li>No success claimed without verification</li></ul></div></section><section class="case-section" data-reveal><h2 class="meta">Verification</h2><div><div class="kpis"><div class="kpi"><b>9</b><span>Point calibration</span></div><div class="kpi"><b>13</b><span>Calibration stages tested</span></div><div class="kpi"><b>4</b><span>Validation targets</span></div><div class="kpi"><b>100%</b><span>Local processing</span></div></div><p>Gesture, acoustic and presentation test suites, a TypeScript + Vite build, Vitest unit tests, the Swift native helper and the signed Tauri app all pass. Next: real-room testing at conference-table distance.</p></div></section></div>
+</main>
+</body>
+</html>

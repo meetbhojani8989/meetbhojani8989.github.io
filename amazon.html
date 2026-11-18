@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amazon Valuation · Meet Bhojani</title>
+<meta name="description" content="A five-year DCF and comparable-company valuation of Amazon by Meet Bhojani.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,700&display=swap">
+<link rel="stylesheet" href="first.css">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion');setTimeout(function(){if(!window.__motionReady)document.documentElement.classList.remove('motion')},2500)}</script>
+<script defer src="vendor/framer-motion.dom.js"></script>
+<script defer src="market.js"></script>
+<script defer src="interests.js"></script>
+<script defer src="site.js"></script>
+<script defer src="chat.js"></script>
+<script>/* arriving through the stripes: start covered so nothing flashes before they lift */try{if(sessionStorage.getItem('signal-wipe')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('arriving')}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Primary">
+<span class="glass-lens" aria-hidden="true"></span>
+<a class="wordmark" href="index.html">Meet Bhojani</a>
+<div class="nav-links"><a href="index.html#about">About</a><a href="index.html#career">Career</a><a href="index.html#experience">Experience</a><a href="projects.html">Projects</a><a href="interests.html">Interests</a><a href="index.html#contact">Contact</a></div>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-sheet">Menu<i aria-hidden="true"></i></button>
+<a class="btn-dark" href="Meet-Bhojani-Resume.pdf" download data-press>Resume <span aria-hidden="true">↓</span></a>
+</nav>
+<div class="nav-sheet" id="nav-sheet" hidden><a href="index.html#about">About<small>01</small></a><a href="index.html#career">Career<small>02</small></a><a href="index.html#experience">Experience<small>03</small></a><a href="projects.html">Projects<small>04</small></a><a href="interests.html">Interests<small>05</small></a><a href="index.html#contact">Contact<small>06</small></a></div>
+<main id="main" tabindex="-1" class="page shell">
+<a class="back" href="projects.html" data-reveal data-press data-magnetic><span class="arrow" aria-hidden="true">←</span> Back to projects</a>
+<article class="project" style="view-transition-name: case-amazon">
+<div>
+<p class="meta" data-reveal>01 · January 2026 · Independent project</p>
+<h1 data-lines><span class="line"><span>Amazon</span></span><span class="line"><span>equity <em>valuation</em></span></span></h1>
+<p data-reveal>A five-year DCF and comparable-company valuation of Amazon (AMZN). I split the business into AWS and retail, forecast each on its own growth and margin, and discounted the free cash flow to an intrinsic value per share.</p>
+<p class="meta method" data-reveal>Excel · DCF · comparable companies · sensitivity</p>
+</div>
+<div class="model" data-tilt data-model="dcf" data-reveal><p class="meta">Free cash flow forecast · $ billions</p><div class="viz"><div class="bars" aria-label="Free cash flow grows from 55.7 billion dollars in 2026 to 91.2 billion in 2030" role="img"><div class="bar" style="--v:0.611"><span>55.7</span><i></i><small>2026E</small></div><div class="bar" style="--v:0.689"><span>62.8</span><i></i><small>2027E</small></div><div class="bar" style="--v:0.777"><span>70.9</span><i></i><small>2028E</small></div><div class="bar" style="--v:0.880"><span>80.3</span><i></i><small>2029E</small></div><div class="bar" style="--v:1.000"><span>91.2</span><i></i><small>2030E</small></div></div></div><div class="viz-foot"><b>$158.20</b><span>Intrinsic value / share</span><span>WACC 8.5% · g 3.0%</span></div></div>
+</article>
+<div class="case"><section class="case-section" data-reveal><h2 class="meta">The answer</h2><div><div class="kpis"><div class="kpi"><b>$158.20</b><span>Intrinsic value / share</span></div><div class="kpi"><b>$1.70T</b><span>Enterprise value</span></div><div class="kpi"><b>84%</b><span>of EV from terminal value</span></div><div class="kpi"><b>8.5%</b><span>WACC · 3% terminal growth</span></div></div></div></section><section class="case-section" data-reveal><h2 class="meta">The insight</h2><div><p>In the 2025 base year AWS is about <strong>17% of revenue but 55% of operating income</strong> ($32.3B of $58.8B). Growing at 18% against retail’s 6%, AWS reaches roughly 68% of operating income by 2030, so the valuation is really a bet on the cloud business.</p></div></section><section class="case-section" data-reveal><h2 class="meta">Assumptions</h2><div><dl class="spec"><div><dt>AWS revenue growth</dt><dd>18%</dd></div><div><dt>Retail revenue growth</dt><dd>6%</dd></div><div><dt>AWS operating margin</dt><dd>30%</dd></div><div><dt>Retail operating margin</dt><dd>5%</dd></div><div><dt>Tax rate</dt><dd>21%</dd></div><div><dt>D&amp;A / revenue</dt><dd>7%</dd></div><div><dt>Capex / revenue</dt><dd>6%</dd></div><div><dt>Δ NWC / revenue</dt><dd>0.5%</dd></div></dl></div></section><section class="case-section" data-reveal><h2 class="meta">Sensitivity</h2><div><div class="sens" data-sens><span class="h">g \ WACC</span><span class="h" data-col="0">8.0%</span><span class="h" data-col="1">8.5%</span><span class="h" data-col="2">9.0%</span><span class="h" data-row="0">2.5%</span><span class="c" style="--a:0.27" data-row="0" data-col="0">$142</span><span class="c" style="--a:0.16" data-row="0" data-col="1">$131</span><span class="c" style="--a:0.05" data-row="0" data-col="2">$120</span><span class="h" data-row="1">3.0%</span><span class="c dark" style="--a:0.55" data-row="1" data-col="0">$170</span><span class="c base" style="--a:0.43" data-row="1" data-col="1">$158.20</span><span class="c" style="--a:0.28" data-row="1" data-col="2">$143</span><span class="h" data-row="2">3.5%</span><span class="c dark" style="--a:0.86" data-row="2" data-col="0">$201</span><span class="c dark" style="--a:0.70" data-row="2" data-col="1">$185</span><span class="c dark" style="--a:0.53" data-row="2" data-col="2">$168</span></div><p class="meta sens-note">Value per share across WACC and terminal growth. Hover a cell.</p></div></section><section class="case-section" data-reveal><h2 class="meta">Comparables · EV / EBITDA</h2><div><div class="compare"><div class="compare-row"><span>Amazon</span><i style="--v:0.707"></i><b>16.5x</b></div><div class="compare-row"><span>Microsoft</span><i style="--v:0.718"></i><b>16.8x</b></div><div class="compare-row"><span>Google</span><i style="--v:1.000"></i><b>23.4x</b></div><div class="compare-row avg"><span>Average</span><i style="--v:0.808"></i><b>18.9x</b></div></div><p>Amazon trades below the peer average on EV/EBITDA (16.5x vs 18.9x) while its P/E (29.0x) sits right at the average (28.7x).</p></div></section></div>
+</main>
+</body>
+</html>
