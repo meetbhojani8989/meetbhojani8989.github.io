@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projects · Meet Bhojani</title>
+<meta name="description" content="Independent projects by Meet Bhojani: Amazon valuation, portfolio analytics and Amber, an offline AI assistant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,700&display=swap">
+<link rel="stylesheet" href="first.css">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion');setTimeout(function(){if(!window.__motionReady)document.documentElement.classList.remove('motion')},2500)}</script>
+<script defer src="vendor/framer-motion.dom.js"></script>
+<script defer src="market.js"></script>
+<script defer src="interests.js"></script>
+<script defer src="site.js"></script>
+<script defer src="chat.js"></script>
+<script>/* arriving through the stripes: start covered so nothing flashes before they lift */try{if(sessionStorage.getItem('signal-wipe')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('arriving')}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Primary">
+<span class="glass-lens" aria-hidden="true"></span>
+<a class="wordmark" href="index.html">Meet Bhojani</a>
+<div class="nav-links"><a href="index.html#about">About</a><a href="index.html#career">Career</a><a href="index.html#experience">Experience</a><a href="projects.html" aria-current="page">Projects</a><a href="interests.html">Interests</a><a href="index.html#contact">Contact</a></div>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-sheet">Menu<i aria-hidden="true"></i></button>
+<a class="btn-dark" href="Meet-Bhojani-Resume.pdf" download data-press>Resume <span aria-hidden="true">↓</span></a>
+</nav>
+<div class="nav-sheet" id="nav-sheet" hidden><a href="index.html#about">About<small>01</small></a><a href="index.html#career">Career<small>02</small></a><a href="index.html#experience">Experience<small>03</small></a><a href="projects.html" aria-current="page">Projects<small>04</small></a><a href="interests.html">Interests<small>05</small></a><a href="index.html#contact">Contact<small>06</small></a></div>
+<main id="main" tabindex="-1" class="work">
+<div class="backdrop bulb" aria-hidden="true"><svg viewBox="0 0 300 400">
+<path d="M150 50 C 92 50 54 94 54 146 C 54 184 74 208 94 230 C 106 244 112 258 112 276 L 188 276 C 188 258 194 244 206 230 C 226 208 246 184 246 146 C 246 94 208 50 150 50 Z"/>
+<path d="M114 296 H186 M118 316 H182 M130 336 H170"/>
+<path d="M130 276 V206 L141 186 L150 206 L159 186 L170 206 V276"/>
+<path d="M150 6 V26 M52 44 L66 58 M248 44 L234 58 M8 146 H28 M272 146 H292"/>
+</svg></div>
+<header class="work-head shell">
+<p class="eyebrow" data-reveal>Projects · 2026</p>
+<h1 class="section-title" data-lines><span class="line"><span>Three projects,</span></span><span class="line"><span>one <em>habit.</em></span></span></h1>
+<p class="lede" data-reveal>Each one started with a question I couldn’t answer with an existing tool, so I built the tool.</p>
+</header>
+<section class="journey" aria-labelledby="journey-title">
+<div class="journey-sticky">
+<div class="journey-head shell"><h2 class="eyebrow" id="journey-title">Projects</h2><p class="meta journey-count"><span data-count>01</span> / 03</p></div>
+<div class="journey-track">
+<article class="panel">
+<span class="panel-num" aria-hidden="true">01</span><div class="panel-copy"><p class="meta">01 · January 2026 · Independent</p><h2>Amazon<br><em>equity valuation</em></h2><p>A five-year DCF and comparable-company model. AWS is 17% of revenue but 55% of operating income, and that mix shift drives the whole valuation.</p><ul class="panel-tags" aria-label="Tools"><li>Excel</li><li>DCF</li><li>Comparables</li><li>Sensitivity</li></ul><a class="link-arrow" href="amazon.html" data-magnetic>Read case study <span class="arrow" aria-hidden="true">→</span></a></div>
+<div class="model" data-tilt data-model="dcf" data-reveal><p class="meta">Free cash flow forecast · $ billions</p><div class="viz"><div class="bars" aria-label="Free cash flow grows from 55.7 billion dollars in 2026 to 91.2 billion in 2030" role="img"><div class="bar" style="--v:0.611"><span>55.7</span><i></i><small>2026E</small></div><div class="bar" style="--v:0.689"><span>62.8</span><i></i><small>2027E</small></div><div class="bar" style="--v:0.777"><span>70.9</span><i></i><small>2028E</small></div><div class="bar" style="--v:0.880"><span>80.3</span><i></i><small>2029E</small></div><div class="bar" style="--v:1.000"><span>91.2</span><i></i><small>2030E</small></div></div></div><div class="viz-foot"><b>$158.20</b><span>Intrinsic value / share</span><span>WACC 8.5% · g 3.0%</span></div></div>
+</article>
+<article class="panel">
+<span class="panel-num" aria-hidden="true">02</span><div class="panel-copy"><p class="meta">02 · April 2026 · Independent</p><h2>Portfolio<br><em>analytics platform</em></h2><p>My Excel trading model, now running live: every day it scores ten stocks on return, volatility, Sharpe and drawdown and picks a stock of the day. Try it on any company.</p><ul class="panel-tags" aria-label="Tools"><li>Live prices</li><li>Sharpe</li><li>Drawdown</li><li>55/45 score</li></ul><a class="link-arrow" href="portfolio.html" data-magnetic>Run the model <span class="arrow" aria-hidden="true">→</span></a></div>
+<div class="model" data-tilt data-reveal><div class="sotd" data-sotd aria-live="polite"></div></div>
+</article>
+<article class="panel panel-dark">
+<span class="panel-num" aria-hidden="true">03</span><div class="panel-copy"><p class="meta">03 · Sep 2026 to present · Independent</p><h2>Amber<br><em>personal AI assistant</em></h2><p>An offline assistant that lives on your Mac. Talk to it, point at the screen, swipe through slides from across the room, and it checks that each action actually worked before it says so.</p><ul class="panel-tags" aria-label="Tools"><li>Tauri</li><li>TypeScript</li><li>Swift</li><li>On-device</li></ul><a class="link-arrow" href="intelligence.html" data-magnetic>Read case study <span class="arrow" aria-hidden="true">→</span></a></div>
+<div class="model model-dark" data-tilt data-model="amber" data-reveal><p class="meta">Amber · personal AI assistant</p><div class="amber"><div class="amber-orbit"><div class="amber-core"><img src="logos/amber.png" alt="Amber logo" width="480" height="480"></div><span class="amber-node" style="--a:0deg">VOICE</span><span class="amber-node" style="--a:60deg">HANDS</span><span class="amber-node" style="--a:120deg">SLIDES</span><span class="amber-node" style="--a:180deg">BAT MODE</span><span class="amber-node" style="--a:240deg">SCREEN</span><span class="amber-node" style="--a:300deg">MEMORY</span></div><div class="amber-say" aria-live="off"><p class="you"></p><p class="bot"></p></div></div></div>
+</article>
+</div>
+<div class="journey-rail"><div class="journey-bar" aria-hidden="true"><i></i></div><ol class="journey-steps" aria-label="Jump to a project"><li><button type="button" data-step="0"><b>01</b>Amazon</button></li><li><button type="button" data-step="1"><b>02</b>Portfolio</button></li><li><button type="button" data-step="2"><b>03</b>Amber</button></li></ol></div>
+</div>
+</section>
+<footer class="site-foot meta shell"><p>© 2026 Meet Bhojani</p><p>Penn State · Smeal College of Business</p></footer>
+</main>
+</body>
+</html>

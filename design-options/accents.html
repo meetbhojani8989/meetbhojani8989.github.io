@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matte accents</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Matte accent previews (design-options only). Each finish is one flat colour, like matte paint or
+   suede: no gradient, no sheen. Hover only deepens it a little. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #fafafa; color: #0a0a0a; font: 16px/1.5 'Inter', system-ui, sans-serif; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 48px 24px 80px; }
+.top { font: 500 12px 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: #525252; }
+h1 { margin: 10px 0 36px; font: 650 44px/1 'Inter'; letter-spacing: -.04em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
+.card { border: 1px solid rgba(10,10,10,.1); border-radius: 18px; background: #fff; overflow: hidden; }
+.mock { padding: 20px 20px 18px; }
+.nav { display: flex; align-items: center; gap: 12px; width: max-content; margin: 0 auto 18px; padding: 5px 5px 5px 14px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px rgba(10,10,10,.1), 0 8px 20px rgba(0,0,0,.05); font-size: 12px; }
+.nav i { font-style: normal; color: #525252; }
+.lab { display: flex; align-items: center; gap: 8px; margin: 0; font: 500 11px 'JetBrains Mono', monospace; letter-spacing: .14em; color: #525252; }
+.lab b { width: 7px; height: 7px; background: var(--metal); }
+.name { margin: 6px 0 14px; font: 700 40px/1 'Inter'; letter-spacing: -.05em; }
+.name em { font-family: 'Playfair Display', serif; font-weight: 500; }
+.metal { background: var(--metal); color: var(--ink); transition: background-color .3s ease, filter .3s ease; }
+.metal:hover, .card:hover .row.metal { filter: brightness(.92); }
+.btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 14px; border-radius: 999px; font-weight: 600; font-size: 12px; cursor: pointer; }
+.row { display: flex; justify-content: space-between; align-items: center; padding: 12px 12px; font-weight: 650; font-size: 18px; letter-spacing: -.02em; }
+.row small { font-size: 12px; font-weight: 500; opacity: .85; }
+.row.plain { border-bottom: 1px solid rgba(10,10,10,.1); }
+.foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; border-top: 1px solid rgba(10,10,10,.08); font-size: 14px; }
+.foot b { font-weight: 600; }
+.foot span { color: #525252; }
+.chip { width: 34px; height: 34px; border-radius: 50%; background: var(--metal); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+
+.champagne { --metal: #B49C73; --ink: #231C12; }
+.bronze { --metal: #7E5E3C; --ink: #FFFFFF; }
+.copper { --metal: #9A5440; --ink: #FFFFFF; }
+.pewter { --metal: #5F6368; --ink: #FFFFFF; }
+.pearl { --metal: #5C6346; --ink: #FFFFFF; }
+.oxblood { --metal: #6E5F55; --ink: #FFFFFF; }
+.burgundy { --metal: #6B1F2E; --ink: #FFFFFF; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="top">Matte accent finishes · hover a card</p>
+<h1>Matte, like suede and stone.</h1>
+<div class="grid">
+
+<div class="card champagne"><div class="mock"><div class="nav"><b>● Meet B.</b><i>Projects</i><i>About</i><span class="btn metal">Resume ↓</span></div><p class="lab"><b></b>EXPLORE</p><p class="name">Meet <em>Bhojani</em></p><div class="row metal">01 Projects <small>Amazon, Portfolio, Amber</small></div><div class="row plain">02 Experience <small style="color:#525252">Gujarat</small></div></div>
+<div class="foot"><span><b style="color:#0a0a0a">Matte champagne</b> · #B49C73 · sand and linen, the warmest</span><i class="chip"></i></div></div>
+
+<div class="card bronze"><div class="mock"><div class="nav"><b>● Meet B.</b><i>Projects</i><i>About</i><span class="btn metal">Resume ↓</span></div><p class="lab"><b></b>EXPLORE</p><p class="name">Meet <em>Bhojani</em></p><div class="row metal">01 Projects <small>Amazon, Portfolio, Amber</small></div><div class="row plain">02 Experience <small style="color:#525252">Gujarat</small></div></div>
+<div class="foot"><span><b style="color:#0a0a0a">Matte bronze</b> · #7E5E3C · a worn leather briefcase</span><i class="chip"></i></div></div>
+
+<div class="card copper"><div class="mock"><div class="nav"><b>● Meet B.</b><i>Projects</i><i>About</i><span class="btn metal">Resume ↓</span></div><p class="lab"><b></b>EXPLORE</p><p class="name">Meet <em>Bhojani</em></p><div class="row metal">01 Projects <small>Amazon, Portfolio, Amber</small></div><div class="row plain">02 Experience <small style="color:#525252">Gujarat</small></div></div>
+<div class="foot"><span><b style="color:#0a0a0a">Terracotta</b> · #9A5440 · clay, sun-baked, Mediterranean</span><i class="chip"></i></div></div>
+
+<div class="card pewter"><div class="mock"><div class="nav"><b>● Meet B.</b><i>Projects</i><i>About</i><span class="btn metal">Resume ↓</span></div><p class="lab"><b></b>EXPLORE</p><p class="name">Meet <em>Bhojani</em></p><div class="row metal">01 Projects <small>Amazon, Portfolio, Amber</small></div><div class="row plain">02 Experience <small style="color:#525252">Gujarat</small></div></div>
+<div class="foot"><span><b style="color:#0a0a0a">Graphite</b> · #5F6368 · a tailored grey suit</span><i class="chip"></i></div></div>
+
+<div class="card pearl"><div class="mock"><div class="nav"><b>● Meet B.</b><i>Projects</i><i>About</i><span class="btn metal">Resume ↓</span></div><p class="lab"><b></b>EXPLORE</p><p class="name">Meet <em>Bhojani</em></p><div class="row metal">01 Projects <small>Amazon, Portfolio, Amber</small></div><div class="row plain">02 Experience <small style="color:#525252">Gujarat</small></div></div>
+<div class="foot"><span><b style="color:#0a0a0a">Olive</b> · #5C6346 · tweed and the country estate</span><i class="chip"></i></div></div>
+
+<div class="card oxblood"><div class="mock"><div class="nav"><b>● Meet B.</b><i>Projects</i><i>About</i><span class="btn metal">Resume ↓</span></div><p class="lab"><b></b>EXPLORE</p><p class="name">Meet <em>Bhojani</em></p><div class="row metal">01 Projects <small>Amazon, Portfolio, Amber</small></div><div class="row plain">02 Experience <small style="color:#525252">Gujarat</small></div></div>
+<div class="card burgundy"><div class="mock"><div class="nav"><b>● Meet B.</b><i>Projects</i><i>About</i><span class="btn metal">Resume ↓</span></div><p class="lab"><b></b>EXPLORE</p><p class="name">Meet <em>Bhojani</em></p><div class="row metal">01 Projects <small>Amazon, Portfolio, Amber</small></div><div class="row plain">02 Experience <small style="color:#525252">Gujarat</small></div></div>
+<div class="foot"><span><b style="color:#0a0a0a">Mink</b> · #6E5F55 · cashmere taupe, the quietest</span><i class="chip"></i></div></div>
+
+</div>
+</div>
+</body>
+</html>

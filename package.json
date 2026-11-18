@@ -1,0 +1,24 @@
+{
+  "name": "dist",
+  "version": "1.0.0",
+  "description": "Static multi-page portfolio website.",
+  "private": true,
+  "main": "site.js",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "check": "node --check site.js && node --check chat.js && node --check one.js && node --check signal.js && node --check market.js && node --check interests.js && node --check turntable.js && node --check api/stock.js && node --check api/sports.js && node --check api/spotify.js && node --check api/preview.js && node --check scripts/spotify-connect.js",
+    "spotify:connect": "node scripts/spotify-connect.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "framer-motion": "^14.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.3"
+  }
+}
