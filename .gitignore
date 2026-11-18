@@ -15,3 +15,5 @@ pnpm-debug.log*
 # local tooling
 .claude/
 .mcp.json
+.vercel
+.env*
